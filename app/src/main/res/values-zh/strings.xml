@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">参考浏览器</string>
+    <string name="toolbar_hint">搜索或输入网址</string>
+    <string name="menu_action_add_tab">新建标签页</string>
+    <string name="menu_action_close_tabs">关闭所有标签页</string>
+    <string name="menu_action_close_tabs_private">关闭隐私标签页</string>
+    <string name="preferences_sign_in_summary">同步您的标签页和历史记录</string>
+    <string name="preferences_pair_sign_in_summary">与 Firefox 桌面版配对</string>
+    <string name="preferences_use_telemetry_summary">发送使用数据</string>
+    <string name="preferences_make_default_browser">设为默认浏览器</string>
+    <string name="preferences_compose_ui">使用实验性 Jetpack Compose UI</string>
+    <string name="preferences_autofill">自动填充应用</string>
+    <string name="preferences_autofill_summary">在其他应用中自动填充登录信息</string>
+    <string name="preferences_sync_history">历史记录</string>
+    <string name="preferences_sync_tabs">打开的标签页</string>
+    <string name="preferences_sync_passwords">密码</string>
+    <string name="preferences_remote_debugging">通过 USB 远程调试</string>
+    <string name="preferences_tracking_protection_normal">在普通浏览模式下启用</string>
+    <string name="preferences_tracking_protection_private">在隐私浏览模式下启用</string>
+    <string name="preferences_global_privacy_control">告诉网站不要共享或出售数据</string>
+    <string name="preferences_about_page">关于参考浏览器</string>
+    <string name="sign_in">登录</string>
+    <string name="pair_sign_in">使用二维码登录</string>
+    <string name="firefox_account">Firefox 账户</string>
+    <string name="sign_out">退出登录</string>
+    <string name="sync_now">立即同步</string>
+    <string name="syncing">同步中</string>
+    <string name="manage_account">管理账户</string>
+    <string name="manage_account_summary">更改密码、管理数据收集或删除账户</string>
+    <string name="preferences_sync_failed_summary">同步失败。上次成功：%s</string>
+    <string name="preferences_sync_failed_never_synced_summary">同步失败。上次同步：从未</string>
+    <string name="preferences_sync_last_synced_summary">上次同步：%s</string>
+    <string name="preferences_sync_never_synced_summary">上次同步：从未</string>
+    <string name="privacy">隐私</string>
+    <string name="preferences_privacy_summary">跟踪、Cookie、数据选择</string>
+    <string name="sync_category">选择同步内容</string>
+    <string name="open_links_in_apps">在应用中打开链接</string>
+    <string name="developer_tools_category">开发者工具</string>
+    <string name="use_telemetry">使用遥测</string>
+    <string name="mozilla_category">Mozilla</string>
+    <string name="tracker_category">跟踪保护</string>
+    <string name="data_choices_category">数据选择</string>
+    <string name="settings">设置</string>
+    <string name="synced_tabs">同步的标签页</string>
+    <string name="account_settings">账户设置</string>
+    <string name="privacy_settings">隐私设置</string>
+    <string name="pair_preferences">配对</string>
+    <string name="pair_instructions">在 Firefox 桌面版中打开 firefox.com/pair 获取配对码</string>
+    <string name="crash_report_non_fatal_message">抱歉，我们崩溃了</string>
+    <string name="crash_report_non_fatal_action">报告</string>
+    <string name="private_browsing_title">隐私浏览</string>
+    <string name="private_browsing_body"><![CDATA[
+<h1>隐私浏览</h1>
+<p>当您在隐私窗口中浏览时，参考浏览器<strong>不会保存</strong>：</p>
+<ul class="two-column">
+    <li>访问的页面</li>
+    <li>搜索记录</li>
+    <li>Cookie</li>
+    <li>临时文件</li>
+</ul>
+<p>隐私浏览<strong>不会让您在互联网上匿名</strong>。您的雇主或互联网服务提供商仍然可以知道您访问的页面。</p>
+<p class="about-info">了解更多关于<a id="learnMore">隐私浏览</a>的信息。</p>
+     ]]></string>
+    <string name="datareporting_notification_title">参考浏览器</string>
+    <string name="datareporting_notification_summary">为了改善您的体验，参考浏览器会自动向 Mozilla 发送一些信息。</string>
+    <string name="default_notification_channel">浏览器</string>
+    <string name="about_content"><![CDATA[
+<p>%1$s 让您掌控一切。</p>
+<p>将其用作参考：
+    <br>&bull; 学习如何构建自己的浏览器。
+    <br>&bull; 为简化浏览器构建做出贡献。
+    <br>&bull; 提交错误报告！
+</p>
+<p>%1$s 由 Mozilla 制作。我们的使命是促进一个健康、开放的互联网。<br/>
+    ]]></string>
+    <string name="menu_share_with">分享到…</string>
+    <string name="toast_copied">已复制！</string>
+    <string name="fxa_received_tab_channel_name">接收的标签页</string>
+    <string name="fxa_received_tab_channel_description">来自其他 Firefox 设备的标签页通知。</string>
+    <string name="fxa_tab_received_notification_name">标签页已接收</string>
+    <string name="fxa_tab_received_from_notification_name">来自 %s 的标签页</string>
+    <string name="synced_tabs_connect_to_sync_account">连接 Firefox 账户。</string>
+    <string name="synced_tabs_connect_another_device">连接另一台设备。</string>
+    <string name="synced_tabs_reauth">请重新认证。</string>
+    <string name="synced_tabs_enable_tab_syncing">请启用标签页同步。</string>
+    <string name="preferences_customize_amo_collection">自定义附加组件集合</string>
+    <string name="customize_addon_collection_ok">确定</string>
+    <string name="customize_addon_collection_cancel">取消</string>
+    <string name="customize_addon_collection_hint">集合名称</string>
+    <string name="customize_addon_collection_user_hint">集合所有者（用户 ID）</string>
+    <string name="toast_customize_addon_collection_done">附加组件集合已修改。退出应用以应用更改…</string>
+    <string name="preferences_change_language">语言</string>
+    <string name="pref_key_change_language" translatable="false">pref_key_change_language</string>
+</resources>

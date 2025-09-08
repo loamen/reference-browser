@@ -6,6 +6,7 @@ package org.mozilla.reference.browser.settings
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,7 +14,6 @@ import android.provider.Settings
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
@@ -84,7 +84,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         //loamen
         val changeLanguageKey = requireContext().getPreferenceKey(R.string.pref_key_change_language)
         val preferenceChangeLanguage = findPreference<Preference>(changeLanguageKey)
-        preferenceChangeLanguage?.onPreferenceClickListener = getClickListenerForChangeLanguage()
+        preferenceChangeLanguage?.onPreferenceClickListener = getClickListenerForLanguageChange()
+        preferenceChangeLanguage?.summary = getCurrentLocale().displayLanguage
 
         val preferenceRemoteDebugging = findPreference<SwitchPreferenceCompat>(remoteDebuggingKey)
         val preferenceAboutPage = findPreference<Preference>(aboutPageKey)
@@ -130,7 +131,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
     //loamen
-    private fun getClickListenerForChangeLanguage(): OnPreferenceClickListener {
+    private fun getClickListenerForLanguageChange(): OnPreferenceClickListener {
         return OnPreferenceClickListener {
             val languageChangeDialog = LanguageChangeDialog(
                 requireContext(),
@@ -265,5 +266,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         private const val AMO_COLLECTION_OVERRIDE_EXIT_DELAY = 3000L
+        //loamen
+        fun getCurrentLocale(): Locale = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            AppCompatDelegate.getApplicationLocales().get(0) ?: Locale.getDefault()
+        } else {
+            Locale.getDefault()
+        })
     }
 }
