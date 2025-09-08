@@ -3,7 +3,7 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
-    <string name="app_name">Reference Browser</string>
+    <string name="app_name">Yooho Browser</string>
 
     <!-- Text shown in the toolbar if it is empty -->
     <string name="toolbar_hint">Search or enter address</string>
@@ -54,7 +54,7 @@
     <string name="preferences_global_privacy_control">Tell websites not to share &amp; sell data</string>
 
     <!-- Preference about page -->
-    <string name="preferences_about_page">About Reference Browser</string>
+    <string name="preferences_about_page">About Yooho Browser</string>
 
     <!-- Preference for signing in -->
     <string name="sign_in">Sign in</string>
@@ -111,7 +111,7 @@
     <string name="use_telemetry">Use Telemetry</string>
 
     <!-- Preference category for Mozilla about/legal etc. -->
-    <string name="mozilla_category">Mozilla</string>
+    <string name="mozilla_category">About</string>
 
     <!-- Preference category for tracking protection -->
     <string name="tracker_category">Tracking Protection</string>
@@ -210,6 +210,5 @@
 
     <!--loamen Preferences-->
     <string name="preferences_change_language">Language</string>
-
     <string name="pref_key_change_language" translatable="false">pref_key_change_language</string>
 </resources>

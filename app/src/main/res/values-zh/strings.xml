@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">参考浏览器</string>
+    <string name="app_name">Y浏览器</string>
     <string name="toolbar_hint">搜索或输入网址</string>
     <string name="menu_action_add_tab">新建标签页</string>
     <string name="menu_action_close_tabs">关闭所有标签页</string>
     <string name="menu_action_close_tabs_private">关闭隐私标签页</string>
     <string name="preferences_sign_in_summary">同步您的标签页和历史记录</string>
-    <string name="preferences_pair_sign_in_summary">与 Firefox 桌面版配对</string>
+    <string name="preferences_pair_sign_in_summary">与 Yooho 桌面版同步</string>
     <string name="preferences_use_telemetry_summary">发送使用数据</string>
     <string name="preferences_make_default_browser">设为默认浏览器</string>
     <string name="preferences_compose_ui">使用实验性 Jetpack Compose UI</string>
@@ -19,7 +19,7 @@
     <string name="preferences_tracking_protection_normal">在普通浏览模式下启用</string>
     <string name="preferences_tracking_protection_private">在隐私浏览模式下启用</string>
     <string name="preferences_global_privacy_control">告诉网站不要共享或出售数据</string>
-    <string name="preferences_about_page">关于参考浏览器</string>
+    <string name="preferences_about_page">关于Y浏览器</string>
     <string name="sign_in">登录</string>
     <string name="pair_sign_in">使用二维码登录</string>
     <string name="firefox_account">Firefox 账户</string>
@@ -38,7 +38,7 @@
     <string name="open_links_in_apps">在应用中打开链接</string>
     <string name="developer_tools_category">开发者工具</string>
     <string name="use_telemetry">使用遥测</string>
-    <string name="mozilla_category">Mozilla</string>
+    <string name="mozilla_category">关于</string>
     <string name="tracker_category">跟踪保护</string>
     <string name="data_choices_category">数据选择</string>
     <string name="settings">设置</string>
@@ -90,6 +90,8 @@
     <string name="customize_addon_collection_hint">集合名称</string>
     <string name="customize_addon_collection_user_hint">集合所有者（用户 ID）</string>
     <string name="toast_customize_addon_collection_done">附加组件集合已修改。退出应用以应用更改…</string>
+
+<!--    loamen-->
     <string name="preferences_change_language">语言</string>
     <string name="pref_key_change_language" translatable="false">pref_key_change_language</string>
 </resources>

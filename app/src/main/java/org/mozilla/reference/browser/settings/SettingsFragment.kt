@@ -108,6 +108,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             preferencePairSignIn?.onPreferenceClickListener = getClickListenerForPairingSignIn()
         }
 
+        //loamen 隐藏
+        preferenceSignIn?.isVisible = false
+        preferencePairSignIn?.isVisible = false
+        preferenceFirefoxAccount?.isVisible = false
+
         if (!AutofillPreference.isSupported(requireContext())) {
             preferenceAutofill?.isVisible = false
         } else {
