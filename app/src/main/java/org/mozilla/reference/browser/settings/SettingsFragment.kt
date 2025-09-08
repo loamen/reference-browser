@@ -40,6 +40,7 @@ import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.sync.BrowserFxAEntryPoint
 import java.util.Locale
 import kotlin.system.exitProcess
+import top.yooho.browser.settings.dialogs.LanguageChangeDialog
 
 private typealias RBSettings = org.mozilla.reference.browser.settings.Settings
 
@@ -80,7 +81,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val preferenceFirefoxAccount = findPreference<Preference>(firefoxAccountKey)
         val preferenceMakeDefaultBrowser = findPreference<Preference>(makeDefaultBrowserKey)
 
-        //loamnen
+        //loamen
         val changeLanguageKey = requireContext().getPreferenceKey(R.string.pref_key_change_language)
         val preferenceChangeLanguage = findPreference<Preference>(changeLanguageKey)
         preferenceChangeLanguage?.onPreferenceClickListener = getClickListenerForChangeLanguage()
@@ -131,21 +132,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
     //loamen
     private fun getClickListenerForChangeLanguage(): OnPreferenceClickListener {
         return OnPreferenceClickListener {
-//            val languageChangeDialog = LanguageChangeDialog(
-//                requireContext(),
-//                object : LanguageChangeDialog.SetLanguageListener {
-//                    override fun onLanguageSelected(locale: Locale) {
-//
-//                        // update language
-//                        AppCompatDelegate.setApplicationLocales(
-//                            LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag()))
-//                        )
-//                        ie.equalit.ceno.settings.Settings.clearAnnouncementData(requireContext())
-//                    }
-//                }
-//            )
-//
-//            languageChangeDialog.getDialog().show()
+            val languageChangeDialog = LanguageChangeDialog(
+                requireContext(),
+                object : LanguageChangeDialog.SetLanguageListener {
+                    override fun onLanguageSelected(locale: Locale) {
+
+                        // update language
+                        AppCompatDelegate.setApplicationLocales(
+                            LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag()))
+                        )
+                        top.yooho.browser.settings.Settings.clearAnnouncementData(requireContext())
+                    }
+                }
+            )
+
+            languageChangeDialog.getDialog().show()
             true
         }
     }
