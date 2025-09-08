@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -71,17 +72,19 @@ open class BrowserActivity : AppCompatActivity() {
 
         NotificationManager.checkAndNotifyPolicy(this)
         lifecycle.addObserver(webExtensionPopupObserver)
-    }
 
-    @Suppress("MissingSuperCall", "OVERRIDE_DEPRECATION")
-    override fun onBackPressed() {
-        supportFragmentManager.fragments.forEach {
-            if (it is UserInteractionHandler && it.onBackPressed()) {
-                return
-            }
-        }
-
-        super.onBackPressedDispatcher.onBackPressed()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    supportFragmentManager.fragments.forEach {
+                        if (it is UserInteractionHandler && it.onBackPressed()) {
+                            return
+                        }
+                    }
+                }
+            },
+        )
     }
 
     @Suppress("DEPRECATION") // ComponentActivity wants us to use registerForActivityResult
