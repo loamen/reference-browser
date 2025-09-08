@@ -6,6 +6,7 @@ pluginManagement {
 }
 
 include ':app'
+//apply from: file("../browser/core_settings.gradle")
 
 def log(message) {
     logger.lifecycle("[settings] ${message}")

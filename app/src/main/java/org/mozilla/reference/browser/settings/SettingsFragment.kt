@@ -15,6 +15,8 @@ import android.widget.EditText
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.Preference.OnPreferenceClickListener
@@ -36,6 +38,7 @@ import org.mozilla.reference.browser.autofill.AutofillPreference
 import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.sync.BrowserFxAEntryPoint
+import java.util.Locale
 import kotlin.system.exitProcess
 
 private typealias RBSettings = org.mozilla.reference.browser.settings.Settings
@@ -76,6 +79,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val preferencePairSignIn = findPreference<Preference>(signInPairKey)
         val preferenceFirefoxAccount = findPreference<Preference>(firefoxAccountKey)
         val preferenceMakeDefaultBrowser = findPreference<Preference>(makeDefaultBrowserKey)
+
+        //loamnen
+        val changeLanguageKey = requireContext().getPreferenceKey(R.string.pref_key_change_language)
+        val preferenceChangeLanguage = findPreference<Preference>(changeLanguageKey)
+        preferenceChangeLanguage?.onPreferenceClickListener = getClickListenerForChangeLanguage()
+
         val preferenceRemoteDebugging = findPreference<SwitchPreferenceCompat>(remoteDebuggingKey)
         val preferenceAboutPage = findPreference<Preference>(aboutPageKey)
         val preferencePrivacy = findPreference<Preference>(privacyKey)
@@ -118,6 +127,28 @@ class SettingsFragment : PreferenceFragmentCompat() {
             startActivity(intent)
             true
         }
+
+    //loamen
+    private fun getClickListenerForChangeLanguage(): OnPreferenceClickListener {
+        return OnPreferenceClickListener {
+//            val languageChangeDialog = LanguageChangeDialog(
+//                requireContext(),
+//                object : LanguageChangeDialog.SetLanguageListener {
+//                    override fun onLanguageSelected(locale: Locale) {
+//
+//                        // update language
+//                        AppCompatDelegate.setApplicationLocales(
+//                            LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag()))
+//                        )
+//                        ie.equalit.ceno.settings.Settings.clearAnnouncementData(requireContext())
+//                    }
+//                }
+//            )
+//
+//            languageChangeDialog.getDialog().show()
+            true
+        }
+    }
 
     private fun getClickListenerForSignIn(): OnPreferenceClickListener =
         OnPreferenceClickListener {

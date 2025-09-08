@@ -14,4 +14,7 @@
 
     <!-- Overriding color of tab counter icon in toolbar -->
     <color name="mozac_ui_tabcounter_default_tint" tools:ignore="UnusedResources">@color/icons</color>
+
+    <!-- Forward-navigation icon color -->
+    <color name="forward_navigation_icon_theme">#FFFFFF</color>
 </resources>

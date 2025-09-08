@@ -65,3 +65,7 @@ test_artifacts/
 google-cloud-sdk/
 *.jar
 *.gz
+
+app/build/
+app/nightly/
+app/raptor/

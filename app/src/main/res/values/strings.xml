@@ -207,4 +207,9 @@
     <string name="customize_addon_collection_user_hint">Collection owner (User ID)</string>
     <!-- Toast shown after confirming the custom add-on collection configuration -->
     <string name="toast_customize_addon_collection_done">Add-on collection modified. Quitting the application to apply changes…</string>
+
+    <!--loamen Preferences-->
+    <string name="preferences_change_language">Language</string>
+
+    <string name="pref_key_change_language" translatable="false">pref_key_change_language</string>
 </resources>
