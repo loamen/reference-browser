@@ -67,3 +67,4 @@ if (localProperties != null) {
         log("Disabled auto-publication of android-components. Enable it by settings '$settingAndroidComponentsPath' in local.properties")
     }
 }
+include ':browser'

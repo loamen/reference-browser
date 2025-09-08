@@ -69,3 +69,5 @@ google-cloud-sdk/
 app/build/
 app/nightly/
 app/raptor/
+
+browser/
