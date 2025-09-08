@@ -148,22 +148,22 @@ class ToolbarIntegration(
         }
 
         return sessionMenuItems + listOf(
-            TextMenuCandidate(text = "Add-ons") {
+            TextMenuCandidate(text = context.getString(R.string.add_ons)) {
                 val intent = Intent(context, AddonsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             },
-            TextMenuCandidate(text = "Synced Tabs") {
+            TextMenuCandidate(text = context.getString(R.string.synced_tabs)) {
                 val intent = Intent(context, SyncedTabsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             },
-            TextMenuCandidate(text = "Report issue") {
+            TextMenuCandidate(text = context.getString(R.string.report_issue)) {
                 tabsUseCases.addTab(
                     url = "https://github.com/mozilla-mobile/reference-browser/issues/new",
                 )
             },
-            TextMenuCandidate(text = "Settings") {
+            TextMenuCandidate(text = context.getString(R.string.settings)) {
                 val intent = Intent(context, SettingsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)

@@ -42,6 +42,8 @@
     <string name="tracker_category">跟踪保护</string>
     <string name="data_choices_category">数据选择</string>
     <string name="settings">设置</string>
+    <string name="add_ons">附加组件</string>
+    <string name="report_issue">报告问题</string>
     <string name="synced_tabs">同步的标签页</string>
     <string name="account_settings">账户设置</string>
     <string name="privacy_settings">隐私设置</string>

@@ -5,6 +5,13 @@
 
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.preference.Preference
+        app:iconSpaceReserved="false"
+        android:key="@string/pref_key_change_language"
+        android:defaultValue="false"
+        android:enabled="true"
+        android:layout="@layout/yooho_clickable_preference"
+        android:title="@string/preferences_change_language" />
 
     <androidx.preference.Preference
             android:key="@string/pref_key_sign_in"
@@ -33,14 +40,6 @@
     <androidx.preference.Preference
             android:key="@string/pref_key_make_default_browser"
             android:title="@string/preferences_make_default_browser"/>
-
-    <androidx.preference.Preference
-        app:iconSpaceReserved="false"
-        android:key="@string/pref_key_change_language"
-        android:defaultValue="false"
-        android:enabled="true"
-        android:layout="@layout/yooho_clickable_preference"
-        android:title="@string/preferences_change_language" />
 
     <org.mozilla.reference.browser.autofill.AutofillPreference
         android:key="@string/pref_key_autofill"

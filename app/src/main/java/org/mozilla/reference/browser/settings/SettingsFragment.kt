@@ -108,11 +108,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             preferencePairSignIn?.onPreferenceClickListener = getClickListenerForPairingSignIn()
         }
 
-        //loamen 隐藏
-        preferenceSignIn?.isVisible = false
-        preferencePairSignIn?.isVisible = false
-        preferenceFirefoxAccount?.isVisible = false
-
         if (!AutofillPreference.isSupported(requireContext())) {
             preferenceAutofill?.isVisible = false
         } else {
@@ -142,12 +137,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 requireContext(),
                 object : LanguageChangeDialog.SetLanguageListener {
                     override fun onLanguageSelected(locale: Locale) {
-
                         // update language
                         AppCompatDelegate.setApplicationLocales(
-                            LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag()))
+                            LocaleListCompat.create(locale)
                         )
                         top.yooho.browser.settings.Settings.clearAnnouncementData(requireContext())
+                        // Update summary to show current language name in the selected locale
+                        findPreference<Preference>(requireContext().getPreferenceKey(R.string.pref_key_change_language))?.summary = locale.displayLanguage
                     }
                 }
             )
