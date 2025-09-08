@@ -93,20 +93,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val preferenceCustomAddons = findPreference<Preference>(customAddonsKey)
         val preferenceAutofill = findPreference<AutofillPreference>(autofillPreferenceKey)
 
-        val accountManager = requireComponents.backgroundServices.accountManager
-        if (accountManager.authenticatedAccount() != null) {
-            preferenceSignIn?.isVisible = false
-            preferencePairSignIn?.isVisible = false
-            preferenceFirefoxAccount?.summary = accountManager.accountProfile()?.email.orEmpty()
-            preferenceFirefoxAccount?.onPreferenceClickListener = getClickListenerForFirefoxAccount()
-        } else {
-            preferenceSignIn?.isVisible = true
-            preferenceFirefoxAccount?.isVisible = false
-            preferenceFirefoxAccount?.onPreferenceClickListener = null
-            preferenceSignIn?.onPreferenceClickListener = getClickListenerForSignIn()
-            preferencePairSignIn?.isVisible = true
-            preferencePairSignIn?.onPreferenceClickListener = getClickListenerForPairingSignIn()
-        }
+//        val accountManager = requireComponents.backgroundServices.accountManager
+//        if (accountManager.authenticatedAccount() != null) {
+//            preferenceSignIn?.isVisible = false
+//            preferencePairSignIn?.isVisible = false
+//            preferenceFirefoxAccount?.summary = accountManager.accountProfile()?.email.orEmpty()
+//            preferenceFirefoxAccount?.onPreferenceClickListener = getClickListenerForFirefoxAccount()
+//        } else {
+//            preferenceSignIn?.isVisible = true
+//            preferenceFirefoxAccount?.isVisible = false
+//            preferenceFirefoxAccount?.onPreferenceClickListener = null
+//            preferenceSignIn?.onPreferenceClickListener = getClickListenerForSignIn()
+//            preferencePairSignIn?.isVisible = true
+//            preferencePairSignIn?.onPreferenceClickListener = getClickListenerForPairingSignIn()
+//        }
+
+        //loamen 隐藏
+        preferenceSignIn?.isVisible = false
+        preferencePairSignIn?.isVisible = false
+        preferenceFirefoxAccount?.isVisible = false
 
         if (!AutofillPreference.isSupported(requireContext())) {
             preferenceAutofill?.isVisible = false
@@ -139,11 +144,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     override fun onLanguageSelected(locale: Locale) {
                         // update language
                         AppCompatDelegate.setApplicationLocales(
-                            LocaleListCompat.create(locale)
+                            LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag()))
                         )
                         top.yooho.browser.settings.Settings.clearAnnouncementData(requireContext())
-                        // Update summary to show current language name in the selected locale
-                        findPreference<Preference>(requireContext().getPreferenceKey(R.string.pref_key_change_language))?.summary = locale.displayLanguage
                     }
                 }
             )

@@ -160,7 +160,7 @@ class ToolbarIntegration(
             },
             TextMenuCandidate(text = context.getString(R.string.report_issue)) {
                 tabsUseCases.addTab(
-                    url = "https://github.com/mozilla-mobile/reference-browser/issues/new",
+                    url = "https://pc.fenchuan8.com/#/index?forum=107794",
                 )
             },
             TextMenuCandidate(text = context.getString(R.string.settings)) {
