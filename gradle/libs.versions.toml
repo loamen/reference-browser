@@ -33,6 +33,7 @@ androidx-preference = "1.2.1"
 androidx-recyclerview = "1.4.0"
 androidx-swiperefreshlayout = "1.1.0"
 androidx-work = "2.10.3"
+androidx_navigation = "2.9.3"
 
 # AndroidX Testing
 androidx-test-core = "1.7.0"
@@ -86,6 +87,7 @@ androidx-preference-ktx = { group = "androidx.preference", name = "preference-kt
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidx-recyclerview" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "androidx-swiperefreshlayout" }
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidx-work" }
+androidx-navigationfragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "androidx_navigation" }
 
 # AndroidX Compose
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-composeBom" }

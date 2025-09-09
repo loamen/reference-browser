@@ -31,11 +31,12 @@ import org.mozilla.reference.browser.addons.WebExtensionActionPopupActivity
 import org.mozilla.reference.browser.browser.BrowserFragment
 import org.mozilla.reference.browser.browser.CrashIntegration
 import org.mozilla.reference.browser.ext.components
+import top.yooho.browser.ui.StandbyFragment
 
 /**
  * Activity that holds the [BrowserFragment].
  */
-open class BrowserActivity : AppCompatActivity() {
+open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationListener {
     private lateinit var crashIntegration: CrashIntegration
 
     private val sessionId: String?
@@ -50,6 +51,12 @@ open class BrowserActivity : AppCompatActivity() {
      */
     open fun createBrowserFragment(sessionId: String?): Fragment = BrowserFragment.create(sessionId)
 
+    /**
+     * loamen
+     * Returns a new instance of [StandbyFragment] to display at startup.
+     */
+    open fun createStandbyFragment(): Fragment = StandbyFragment.create()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
@@ -60,7 +67,7 @@ open class BrowserActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.container, createBrowserFragment(sessionId))
+                replace(R.id.container, createStandbyFragment())
                 commit()
             }
         }
@@ -146,5 +153,14 @@ open class BrowserActivity : AppCompatActivity() {
         intent.putExtra("web_extension_name", webExtensionState.name)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
+    }
+
+    /**
+     * Implementation of StandbyFragment.NavigationListener
+     */
+    override fun onNavigateToBrowser() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, createBrowserFragment(sessionId))
+            .commit()
     }
 }
