@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -176,6 +177,81 @@ class AddonsFragment :
                 Toast.LENGTH_LONG,
             ).show()
         }
+    }
+
+    /**
+     * loamen从网络安装扩展
+     */
+    fun openUrlInstaller() {
+        val input = android.widget.EditText(requireContext())
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.install_add_on_via_url))
+            .setView(input)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val url = input.text.toString()
+                if (url.isNotBlank()) {
+                    // 判断url是否是以http开头，并且包含字符串.xpi
+                    if (url.startsWith("http") && url.contains(".xpi")) {
+                        installAddonFromUrl(url)
+                    } else {
+                        // URL格式不正确，提示用户
+                        AlertDialog.Builder(requireContext())
+                            .setTitle("Invalid URL")
+                            .setMessage("Please enter a valid URL")
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show()
+                    }
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun installAddonFromUrl(url: String) {
+        if (isInstallationInProgress) {
+            return
+        }
+
+        addonProgressOverlay.visibility = View.VISIBLE
+        isInstallationInProgress = true
+
+        Logger.info("Installing add-on from URL: $url")
+
+        requireContext().components.core.addonManager.installAddon(
+            url = url,
+            onSuccess = {
+                scope.launch(Dispatchers.Main) {
+                    runIfFragmentIsAttached {
+                        isInstallationInProgress = false
+                        this@AddonsFragment.view?.let { view ->
+                            bindRecyclerView(view)
+                        }
+                        addonProgressOverlay.visibility = View.GONE
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.the_add_on_installation_was_successful),
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                }
+            },
+            onError = { e ->
+                scope.launch(Dispatchers.Main) {
+                    runIfFragmentIsAttached {
+                        addonProgressOverlay.visibility = View.GONE
+                        isInstallationInProgress = false
+
+                        Logger.error(getString(R.string.the_add_on_installation_was_failed), e)
+
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.the_add_on_installation_was_failed) + e.message,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                }
+            },
+        )
     }
 
     /**

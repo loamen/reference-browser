@@ -5,8 +5,17 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/addons_menu_install_from_file"
+        android:id="@+id/addons_menu_install"
         android:icon="@drawable/mozac_ic_extension_24"
         android:title="@string/install_add_on_via_file"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/addons_menu_install_from_file"
+                android:title="@string/install_add_on_via_file" />
+            <item
+                android:id="@+id/addons_menu_install_from_url"
+                android:title="@string/install_add_on_via_url" />
+        </menu>
+    </item>
 </menu>

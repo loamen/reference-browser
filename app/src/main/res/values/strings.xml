@@ -221,4 +221,6 @@
     <string name="unable_to_open_the_file_chooser">Unable to open the file chooser</string>
     <string name="the_add_on_installation_was_successful">The Add-on installation was successful</string>
     <string name="the_add_on_installation_was_failed">The Add-on installation was failed</string>
+    <string name="invalid_url">Invalid URL</string>
+    <string name="please_enter_a_valid_url">Please enter a valid URL</string>
 </resources>

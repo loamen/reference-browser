@@ -47,6 +47,11 @@ class AddonsActivity : AppCompatActivity() {
                 fragment?.openFilePicker()
                 true
             }
+            R.id.addons_menu_install_from_url -> {
+                val fragment = supportFragmentManager.findFragmentById(R.id.container) as? AddonsFragment
+                fragment?.openUrlInstaller()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -100,9 +100,11 @@
 <!--    loamen-->
     <string name="preferences_change_language">语言</string>
     <string name="pref_key_change_language" translatable="false">pref_key_change_language</string>
-    <string name="install_add_on_via_file">从文件安装扩展</string>
-    <string name="install_add_on_via_url">从URL安装扩展</string>
+    <string name="install_add_on_via_file">从文件安装</string>
+    <string name="install_add_on_via_url">从URL安装</string>
     <string name="unable_to_open_the_file_chooser">无法打开文件选择器</string>
     <string name="the_add_on_installation_was_successful">扩展安装成功</string>
     <string name="the_add_on_installation_was_failed">扩展安装失败</string>
+    <string name="invalid_url">无效的URL</string>
+    <string name="please_enter_a_valid_url">请输入有效的URL</string>
 </resources>
