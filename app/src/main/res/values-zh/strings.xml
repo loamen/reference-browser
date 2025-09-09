@@ -22,7 +22,7 @@
     <string name="preferences_about_page">关于Y浏览器</string>
     <string name="sign_in">登录</string>
     <string name="pair_sign_in">使用二维码登录</string>
-    <string name="firefox_account">Firefox 账户</string>
+    <string name="firefox_account">Yooho 账户</string>
     <string name="sign_out">退出登录</string>
     <string name="sync_now">立即同步</string>
     <string name="syncing">同步中</string>
@@ -48,7 +48,7 @@
     <string name="account_settings">账户设置</string>
     <string name="privacy_settings">隐私设置</string>
     <string name="pair_preferences">配对</string>
-    <string name="pair_instructions">在 Firefox 桌面版中打开 firefox.com/pair 获取配对码</string>
+    <string name="pair_instructions">在 Yooho 桌面版中打开 yooho.top/pair 获取配对码</string>
     <string name="crash_report_non_fatal_message">抱歉，我们崩溃了</string>
     <string name="crash_report_non_fatal_action">报告</string>
     <string name="private_browsing_title">隐私浏览</string>
@@ -65,7 +65,7 @@
 <p class="about-info">了解更多关于<a id="learnMore">隐私浏览</a>的信息。</p>
      ]]></string>
     <string name="datareporting_notification_title">参考浏览器</string>
-    <string name="datareporting_notification_summary">为了改善您的体验，参考浏览器会自动向 Mozilla 发送一些信息。</string>
+    <string name="datareporting_notification_summary">为了改善您的体验，参考浏览器会自动向 Yooho 发送一些信息。</string>
     <string name="default_notification_channel">浏览器</string>
     <string name="about_content"><![CDATA[
 <p>%1$s 让您掌控一切。</p>
@@ -74,15 +74,15 @@
     <br>&bull; 为简化浏览器构建做出贡献。
     <br>&bull; 提交错误报告！
 </p>
-<p>%1$s 由 Mozilla 制作。我们的使命是促进一个健康、开放的互联网。<br/>
+<p>%1$s 由 Yooho 制作。我们的使命是促进一个健康、开放的互联网。<br/>
     ]]></string>
     <string name="menu_share_with">分享到…</string>
     <string name="toast_copied">已复制！</string>
     <string name="fxa_received_tab_channel_name">接收的标签页</string>
-    <string name="fxa_received_tab_channel_description">来自其他 Firefox 设备的标签页通知。</string>
+    <string name="fxa_received_tab_channel_description">来自其他 Yooho 设备的标签页通知。</string>
     <string name="fxa_tab_received_notification_name">标签页已接收</string>
     <string name="fxa_tab_received_from_notification_name">来自 %s 的标签页</string>
-    <string name="synced_tabs_connect_to_sync_account">连接 Firefox 账户。</string>
+    <string name="synced_tabs_connect_to_sync_account">连接 Yooho 账户。</string>
     <string name="synced_tabs_connect_another_device">连接另一台设备。</string>
     <string name="synced_tabs_reauth">请重新认证。</string>
     <string name="synced_tabs_enable_tab_syncing">请启用标签页同步。</string>
