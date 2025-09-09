@@ -35,16 +35,20 @@
     <string name="privacy">隐私</string>
     <string name="preferences_privacy_summary">跟踪、Cookie、数据选择</string>
     <string name="sync_category">选择同步内容</string>
-    <string name="open_links_in_apps">在应用中打开链接</string>
+    <string name="open_links_in_apps">用外部应用打开链接</string>
     <string name="developer_tools_category">开发者工具</string>
     <string name="use_telemetry">使用遥测</string>
     <string name="mozilla_category">关于</string>
     <string name="tracker_category">跟踪保护</string>
     <string name="data_choices_category">数据选择</string>
     <string name="settings">设置</string>
-    <string name="add_ons">附加组件</string>
-    <string name="report_issue">报告问题</string>
-    <string name="synced_tabs">同步的标签页</string>
+    <string name="add_ons">扩展</string>
+    <string name="report_issue">反馈问题</string>
+    <string name="find_in_page">在页面中查找</string>
+    <string name="share">分享</string>
+    <string name="request_desktop_site">桌面版网站</string>
+    <string name="add_to_homescreen">添加到首屏</string>
+    <string name="synced_tabs">同步标签</string>
     <string name="account_settings">账户设置</string>
     <string name="privacy_settings">隐私设置</string>
     <string name="pair_preferences">配对</string>
@@ -86,12 +90,12 @@
     <string name="synced_tabs_connect_another_device">连接另一台设备。</string>
     <string name="synced_tabs_reauth">请重新认证。</string>
     <string name="synced_tabs_enable_tab_syncing">请启用标签页同步。</string>
-    <string name="preferences_customize_amo_collection">自定义附加组件集合</string>
+    <string name="preferences_customize_amo_collection">自定义扩展集合</string>
     <string name="customize_addon_collection_ok">确定</string>
     <string name="customize_addon_collection_cancel">取消</string>
     <string name="customize_addon_collection_hint">集合名称</string>
     <string name="customize_addon_collection_user_hint">集合所有者（用户 ID）</string>
-    <string name="toast_customize_addon_collection_done">附加组件集合已修改。退出应用以应用更改…</string>
+    <string name="toast_customize_addon_collection_done">扩展集合已修改。退出应用以应用更改…</string>
 
 <!--    loamen-->
     <string name="preferences_change_language">语言</string>

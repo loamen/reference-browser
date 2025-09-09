@@ -110,12 +110,12 @@ class ToolbarIntegration(
     private fun sessionMenuItems(sessionState: SessionState): List<MenuCandidate> =
         listOfNotNull(
             menuToolbar(sessionState),
-            TextMenuCandidate("Share") {
+            TextMenuCandidate(context.getString(R.string.share)) {
                 val url = sessionState.content.url
                 context.share(url)
             },
             CompoundMenuCandidate(
-                text = "Request desktop site",
+                text = context.getString(R.string.request_desktop_site),
                 isChecked = sessionState.content.desktopMode,
                 end = CompoundMenuCandidate.ButtonType.SWITCH,
             ) { checked ->
@@ -123,7 +123,7 @@ class ToolbarIntegration(
             },
             if (webAppUseCases.isPinningSupported()) {
                 TextMenuCandidate(
-                    text = "Add to homescreen",
+                    text = context.getString(R.string.add_to_homescreen),
                     containerStyle = ContainerStyle(
                         isVisible = webAppUseCases.isPinningSupported(),
                     ),
@@ -134,7 +134,7 @@ class ToolbarIntegration(
                 null
             },
             TextMenuCandidate(
-                text = "Find in Page",
+                text = context.getString(R.string.find_in_page),
             ) {
                 FindInPageIntegration.launch?.invoke()
             },
