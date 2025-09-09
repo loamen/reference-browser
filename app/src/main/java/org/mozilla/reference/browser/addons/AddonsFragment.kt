@@ -196,8 +196,8 @@ class AddonsFragment :
                     } else {
                         // URL格式不正确，提示用户
                         AlertDialog.Builder(requireContext())
-                            .setTitle("Invalid URL")
-                            .setMessage("Please enter a valid URL")
+                            .setTitle(getString(R.string.invalid_url))
+                            .setMessage(getString(R.string.please_enter_a_valid_url))
                             .setPositiveButton(android.R.string.ok, null)
                             .show()
                     }
