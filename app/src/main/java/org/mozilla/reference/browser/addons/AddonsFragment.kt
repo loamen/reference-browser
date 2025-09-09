@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +23,7 @@ import mozilla.components.feature.addons.AddonManagerException
 import mozilla.components.feature.addons.ui.AddonsManagerAdapter
 import mozilla.components.feature.addons.ui.AddonsManagerAdapterDelegate
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
+import mozilla.components.support.base.log.logger.Logger
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.ext.components
 import mozilla.components.feature.addons.R as addonsR
@@ -36,6 +39,7 @@ class AddonsFragment :
     private val scope = CoroutineScope(Dispatchers.IO)
     private lateinit var addons: List<Addon>
     private var adapter: AddonsManagerAdapter? = null
+    private lateinit var getFileActivityResultLauncher: ActivityResultLauncher<Intent>
 
     private val addonProgressOverlay: View
         get() = requireView().findViewById(R.id.addonProgressOverlay)
@@ -61,6 +65,16 @@ class AddonsFragment :
             owner = this,
             view = rootView,
         )
+
+        // 注册文件选择器
+        getFileActivityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == android.app.Activity.RESULT_OK) {
+                    result.data?.data?.let { uri ->
+                        installAddonFromFile(uri)
+                    }
+                }
+            }
     }
 
     override fun onStart() {
@@ -94,10 +108,10 @@ class AddonsFragment :
                 scope.launch(Dispatchers.Main) {
                     Toast
                         .makeText(
-                        activity,
-                        addonsR.string.mozac_feature_addons_failed_to_query_extensions,
-                        Toast.LENGTH_SHORT,
-                    ).show()
+                            activity,
+                            addonsR.string.mozac_feature_addons_failed_to_query_extensions,
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             }
         }
@@ -140,6 +154,71 @@ class AddonsFragment :
                 runIfFragmentIsAttached {
                     addonProgressOverlay.visibility = View.GONE
                     isInstallationInProgress = false
+                }
+            },
+        )
+    }
+
+    //loamen 重写打开文件选择器
+    fun openFilePicker() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "application/x-xpinstall" // XPI文件是Firefox扩展文件
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+
+        try {
+            getFileActivityResultLauncher.launch(intent)
+        } catch (e: Exception) {
+            Logger.error(getString(R.string.unable_to_open_the_file_chooser), e)
+
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.unable_to_open_the_file_chooser) + e.message,
+                Toast.LENGTH_LONG,
+            ).show()
+        }
+    }
+
+    /**
+     * 从文件安装扩展
+     */
+    private fun installAddonFromFile(uri: android.net.Uri) {
+        addonProgressOverlay.visibility = View.VISIBLE
+        isInstallationInProgress = true
+
+        Logger.info("Installing add-on from file: ${uri.toString()}")
+
+        requireContext().components.core.addonManager.installAddon(
+            url = uri.toString(),
+            onSuccess = {
+                scope.launch(Dispatchers.Main) {
+                    runIfFragmentIsAttached {
+                        isInstallationInProgress = false
+                        this@AddonsFragment.view?.let { view ->
+                            bindRecyclerView(view)
+                        }
+                        addonProgressOverlay.visibility = View.GONE
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.the_add_on_installation_was_successful),
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                }
+            },
+            onError = { e ->
+                scope.launch(Dispatchers.Main) {
+                    runIfFragmentIsAttached {
+                        addonProgressOverlay.visibility = View.GONE
+                        isInstallationInProgress = false
+
+                        Logger.error(getString(R.string.the_add_on_installation_was_failed), e)
+
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.the_add_on_installation_was_failed) + e.message,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
                 }
             },
         )

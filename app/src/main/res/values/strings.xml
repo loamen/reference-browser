@@ -216,4 +216,9 @@
     <!--loamen Preferences-->
     <string name="preferences_change_language">Language</string>
     <string name="pref_key_change_language" translatable="false">pref_key_change_language</string>
+    <string name="install_add_on_via_file">Install Add-on via file</string>
+    <string name="install_add_on_via_url">Install Add-on via URL</string>
+    <string name="unable_to_open_the_file_chooser">Unable to open the file chooser</string>
+    <string name="the_add_on_installation_was_successful">The Add-on installation was successful</string>
+    <string name="the_add_on_installation_was_failed">The Add-on installation was failed</string>
 </resources>

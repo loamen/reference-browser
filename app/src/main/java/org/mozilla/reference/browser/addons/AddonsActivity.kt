@@ -6,6 +6,8 @@ package org.mozilla.reference.browser.addons
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +24,30 @@ class AddonsActivity : AppCompatActivity() {
         enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT))
         window.setupPersistentInsets(true)
 
+        setTitle(R.string.add_ons)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.container, AddonsFragment())
                 commit()
             }
+        }
+    }
+    
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.install_add_ons_menu, menu)
+        return true
+    }
+    
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.addons_menu_install_from_file -> {
+                // 通过FragmentManager找到AddonsFragment并调用其打开文件选择器的方法
+                val fragment = supportFragmentManager.findFragmentById(R.id.container) as? AddonsFragment
+                fragment?.openFilePicker()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
