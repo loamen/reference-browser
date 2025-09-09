@@ -17,7 +17,7 @@ import groovy.json.JsonOutput
 
 android {
     defaultConfig {
-        applicationId "org.mozilla.reference.browser"
+        applicationId "top.yooho.browser"
         minSdkVersion Config.minSdkVersion
         compileSdk = Config.compileSdkVersion
         targetSdkVersion Config.targetSdkVersion
