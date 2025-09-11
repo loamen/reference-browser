@@ -83,10 +83,36 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
         onBackPressedDispatcher.addCallback(
             this,
             object : OnBackPressedCallback(true) {
+                private var isPromptShown = false
+                private var lastBackPressTime: Long = 0
+
                 override fun handleOnBackPressed() {
                     supportFragmentManager.fragments.forEach {
                         if (it is UserInteractionHandler && it.onBackPressed()) {
                             return
+                        }
+                    }
+
+                    if (!isPromptShown) {
+                        // 显示提示，要求用户再按一次返回键
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            getString(R.string.press_again_to_exit),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        isPromptShown = true
+                        lastBackPressTime = System.currentTimeMillis()
+                    } else {
+                        // 检查两次按下的时间间隔是否在3秒内
+                        if (System.currentTimeMillis() - lastBackPressTime <= 3000) {
+                            // 用户再次按下返回键，关闭 Activity
+                            if (isEnabled) {
+                                isEnabled = false
+                                onBackPressedDispatcher.onBackPressed()
+                            }
+                        } else {
+                            // 超过3秒，重置状态
+                            isPromptShown = false
                         }
                     }
                 }
