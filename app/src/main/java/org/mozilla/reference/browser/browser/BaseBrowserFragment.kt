@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import mozilla.components.browser.state.selector.selectedTab
+import mozilla.components.browser.state.state.content.DownloadState
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.compose.browser.toolbar.BrowserToolbar
 import mozilla.components.concept.engine.EngineView
@@ -125,8 +127,8 @@ abstract class BaseBrowserFragment :
                 val grantResults =
                     results.values
                         .map {
-                        if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-                    }.toIntArray()
+                            if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
+                        }.toIntArray()
                 downloadsFeature.withFeature {
                     it.onPermissionsResult(permissions, grantResults)
                 }
@@ -138,8 +140,8 @@ abstract class BaseBrowserFragment :
                 val grantResults =
                     results.values
                         .map {
-                        if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-                    }.toIntArray()
+                            if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
+                        }.toIntArray()
                 sitePermissionFeature.withFeature {
                     it.onPermissionsResult(permissions, grantResults)
                 }
@@ -151,8 +153,8 @@ abstract class BaseBrowserFragment :
                 val grantResults =
                     results.values
                         .map {
-                        if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-                    }.toIntArray()
+                            if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
+                        }.toIntArray()
                 promptsFeature.withFeature {
                     it.onPermissionsResult(permissions, grantResults)
                 }
@@ -250,6 +252,17 @@ abstract class BaseBrowserFragment :
                 ),
                 onNeedToRequestPermissions = { permissions ->
                     requestDownloadPermissionsLauncher.launch(permissions)
+                },
+                //loamen 下载插件后自动安装
+                onDownloadStopped = { downloadState, msg, status ->
+                    if (status != DownloadState.Status.COMPLETED) {
+                        return@DownloadsFeature
+                    }
+                    // Check if the downloaded file is an .xpi extension
+                    if (downloadState.fileName?.endsWith(".xpi", ignoreCase = true) == true) {
+                        // Automatically install the extension
+                        installAddonFromFile(downloadState.filePath)
+                    }
                 },
             ),
             owner = this,
@@ -456,6 +469,32 @@ abstract class BaseBrowserFragment :
         }
     }
 
+    /**
+     * loamen
+     *  * Install an add-on from a file.
+     *
+     * @param filePath The path to the file to install.
+     */
+    private fun installAddonFromFile(filePath: String) {
+        requireComponents.core.addonManager.installAddon(
+            url = "file://$filePath",
+            onSuccess = {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.the_add_on_installation_was_successful,
+                    Toast.LENGTH_SHORT,
+                ).show()
+            },
+            onError = { throwable ->
+                Toast.makeText(
+                    requireContext(),
+                    requireContext().getString(R.string.the_add_on_installation_was_failed) + throwable.message,
+                    Toast.LENGTH_LONG,
+                ).show()
+            },
+        )
+    }
+
     companion object {
         private const val SESSION_ID = "session_id"
 
@@ -472,7 +511,7 @@ abstract class BaseBrowserFragment :
     ): Boolean {
         Logger.info(
             "Fragment onActivityResult received with " +
-                "requestCode: $requestCode, resultCode: $resultCode, data: $data",
+                    "requestCode: $requestCode, resultCode: $resultCode, data: $data",
         )
 
         return activityResultHandler.any { it.onActivityResult(requestCode, data, resultCode) }
