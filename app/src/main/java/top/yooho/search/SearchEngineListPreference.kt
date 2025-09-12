@@ -44,7 +44,7 @@ abstract class SearchEngineListPreference @JvmOverloads constructor(
         searchEngineGroup = holder.itemView.findViewById(R.id.search_engine_group)
         val context = searchEngineGroup!!.context
 
-        searchEngines = context.components.core.store.state.search.searchEngines
+        searchEngines = loadSearchEngines()
 
         refreshSearchEngineViews(context)
     }
@@ -57,7 +57,7 @@ abstract class SearchEngineListPreference @JvmOverloads constructor(
     protected abstract fun updateDefaultItem(defaultButton: CompoundButton)
 
     fun refetchSearchEngines() {
-        searchEngines = context.components.core.store.state.search.searchEngines
+        searchEngines = loadSearchEngines()
         refreshSearchEngineViews(this@SearchEngineListPreference.context)
     }
 
@@ -106,5 +106,17 @@ abstract class SearchEngineListPreference @JvmOverloads constructor(
         val drawables = buttonItem.compoundDrawables
         buttonItem.setCompoundDrawablesRelative(engineIcon, null, drawables[2], null)
         return buttonItem
+    }
+
+    //loamen 获取引擎列表
+    private fun loadSearchEngines(): List<SearchEngine> {
+        var searchEngines = context.components.core.store.state.search.searchEngines
+
+        // 如果搜索引擎数量大于3，删除索引为3的搜索引擎
+        if (searchEngines.size > 3) {
+            searchEngines = searchEngines.toMutableList().apply { removeAt(3) }
+        }
+        
+        return searchEngines
     }
 }

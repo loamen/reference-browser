@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import mozilla.components.browser.state.state.WebExtensionState
+import mozilla.components.browser.state.state.searchEngines
+import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.concept.engine.EngineView
 import mozilla.components.feature.intent.ext.EXTRA_SESSION_ID
 import mozilla.components.lib.crash.Crash
@@ -118,6 +120,16 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
                 }
             },
         )
+
+        //loamen初始化搜索引擎
+        if (components.core.store.state.search.userSelectedSearchEngineId == null) {
+            val baiduEngine = components.core.store.state.search.searchEngines.firstOrNull {
+                it.name.contains("百度") || it.name.lowercase().contains("baidu")
+            }
+            if (baiduEngine != null) {
+                components.useCases.searchUseCases.selectSearchEngine(baiduEngine)
+            }
+        }
     }
 
     @Suppress("DEPRECATION") // ComponentActivity wants us to use registerForActivityResult

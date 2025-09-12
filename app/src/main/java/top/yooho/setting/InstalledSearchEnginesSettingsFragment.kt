@@ -21,8 +21,8 @@ import kotlin.collections.forEach as withEach
 
 class InstalledSearchEnginesSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
-        // 当Fragment被销毁时，恢复ActionBar标题
-        (activity as? SettingsFragment.ActionBarUpdater)?.updateTitle(top.yooho.browser.R.string.preference_choose_search_engine)
+        // 当Fragment创建是时，修改ActionBar标题
+        (activity as? SettingsFragment.ActionBarUpdater)?.updateTitle(R.string.preference_choose_search_engine)
     }
 
     companion object {
