@@ -6,7 +6,6 @@ package org.mozilla.reference.browser.settings
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,7 +17,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.Preference.OnPreferenceClickListener
@@ -42,9 +40,10 @@ import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.sync.BrowserFxAEntryPoint
+import top.yooho.browser.settings.dialogs.LanguageChangeDialog
+import top.yooho.setting.InstalledSearchEnginesSettingsFragment
 import java.util.Locale
 import kotlin.system.exitProcess
-import top.yooho.browser.settings.dialogs.LanguageChangeDialog
 
 private typealias RBSettings = org.mozilla.reference.browser.settings.Settings
 
