@@ -10,8 +10,15 @@
         android:key="@string/pref_key_change_language"
         android:defaultValue="false"
         android:enabled="true"
-        android:layout="@layout/yooho_clickable_preference"
+        android:layout="@layout/clickable_preference"
         android:title="@string/preferences_change_language" />
+
+    <androidx.preference.Preference
+        android:key="@string/pref_key_search_engine"
+        android:summary="@string/preference_search_summary"
+        android:title="@string/set_default_search_engine"
+        android:layout="@layout/clickable_preference"
+        app:iconSpaceReserved="false" />
 
     <androidx.preference.Preference
             android:key="@string/pref_key_sign_in"

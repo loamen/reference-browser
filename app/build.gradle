@@ -372,6 +372,8 @@ dependencies {
 
     androidTestUtil libs.androidx.test.orchestrator
 
+    //loamen
+    implementation(libs.androidx.navigationfragment)
     implementation project(':browser')
 }
 

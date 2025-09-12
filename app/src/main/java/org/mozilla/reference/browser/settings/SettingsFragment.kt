@@ -15,13 +15,16 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.Preference.OnPreferenceClickListener
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.service.fxa.manager.SCOPE_PROFILE
 import mozilla.components.service.fxa.manager.SCOPE_SYNC
 import mozilla.components.support.ktx.android.view.showKeyboard
@@ -35,6 +38,7 @@ import org.mozilla.reference.browser.R.string.pref_key_privacy
 import org.mozilla.reference.browser.R.string.pref_key_remote_debugging
 import org.mozilla.reference.browser.R.string.pref_key_sign_in
 import org.mozilla.reference.browser.autofill.AutofillPreference
+import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.sync.BrowserFxAEntryPoint
@@ -93,6 +97,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val preferenceCustomAddons = findPreference<Preference>(customAddonsKey)
         val preferenceAutofill = findPreference<AutofillPreference>(autofillPreferenceKey)
 
+        // loamen隐藏compose_ui设置项
+        val composeUIKey = requireContext().getPreferenceKey(R.string.pref_key_compose_ui)
+        val preferenceComposeUI = findPreference<SwitchPreferenceCompat>(composeUIKey)
+        preferenceComposeUI?.isVisible = false
+
 //        val accountManager = requireComponents.backgroundServices.accountManager
 //        if (accountManager.authenticatedAccount() != null) {
 //            preferenceSignIn?.isVisible = false
@@ -112,6 +121,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
         preferenceSignIn?.isVisible = false
         preferencePairSignIn?.isVisible = false
         preferenceFirefoxAccount?.isVisible = false
+
+        val  searchEngineKey = requireContext().getPreferenceKey(top.yooho.browser.R.string.pref_key_search_engine)
+            val preferenceSearchEngine = findPreference<Preference>(searchEngineKey)
+        preferenceSearchEngine?.onPreferenceClickListener = getClickListenerForSearch()
+
+        preferenceSearchEngine?.summary = getString(
+            top.yooho.browser.R.string.setting_item_selected,
+            requireContext().components.core.store.state.search.selectedOrDefaultSearchEngine?.name
+        )
 
         if (!AutofillPreference.isSupported(requireContext())) {
             preferenceAutofill?.isVisible = false
@@ -135,7 +153,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-    //loamen
+    //loamen 切换语言
     private fun getClickListenerForLanguageChange(): OnPreferenceClickListener {
         return OnPreferenceClickListener {
             val languageChangeDialog = LanguageChangeDialog(
@@ -144,14 +162,30 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     override fun onLanguageSelected(locale: Locale) {
                         // update language
                         AppCompatDelegate.setApplicationLocales(
-                            LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag()))
+                            LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag())),
                         )
                         top.yooho.browser.settings.Settings.clearAnnouncementData(requireContext())
                     }
-                }
+                },
             )
 
             languageChangeDialog.getDialog().show()
+            true
+        }
+    }
+
+    //loamen 设置搜索引擎
+    private fun getActionBar() = (activity as AppCompatActivity).supportActionBar!!
+
+    private fun getClickListenerForSearch(): OnPreferenceClickListener {
+        return OnPreferenceClickListener {
+            // 如果NavController不可用，使用传统方式替换Fragment
+            parentFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, InstalledSearchEnginesSettingsFragment())
+                .addToBackStack(null)
+                .commit()
+            getActionBar().setTitle(top.yooho.browser.R.string.preference_choose_search_engine)
             true
         }
     }
@@ -234,47 +268,46 @@ class SettingsFragment : PreferenceFragmentCompat() {
             AlertDialog
                 .Builder(context)
                 .apply {
-                setTitle(context.getString(R.string.preferences_customize_amo_collection))
-                setView(dialogView)
-                setNegativeButton(R.string.customize_addon_collection_cancel) { dialog: DialogInterface, _ ->
-                    dialog.cancel()
-                }
+                    setTitle(context.getString(R.string.preferences_customize_amo_collection))
+                    setView(dialogView)
+                    setNegativeButton(R.string.customize_addon_collection_cancel) { dialog: DialogInterface, _ ->
+                        dialog.cancel()
+                    }
 
-                setPositiveButton(R.string.customize_addon_collection_ok) { _, _ ->
-                    RBSettings.setOverrideAmoUser(context, userView.text.toString())
-                    RBSettings.setOverrideAmoCollection(context, collectionView.text.toString())
+                    setPositiveButton(R.string.customize_addon_collection_ok) { _, _ ->
+                        RBSettings.setOverrideAmoUser(context, userView.text.toString())
+                        RBSettings.setOverrideAmoCollection(context, collectionView.text.toString())
 
-                    Toast
-                        .makeText(
-                        context,
-                        getString(R.string.toast_customize_addon_collection_done),
-                        Toast.LENGTH_LONG,
-                    ).show()
+                        Toast
+                            .makeText(
+                                context,
+                                getString(R.string.toast_customize_addon_collection_done),
+                                Toast.LENGTH_LONG,
+                            ).show()
 
-                    Handler(Looper.getMainLooper()).postDelayed(
-                        {
-                            exitProcess(0)
-                        },
-                        AMO_COLLECTION_OVERRIDE_EXIT_DELAY,
-                    )
-                }
+                        Handler(Looper.getMainLooper()).postDelayed(
+                            {
+                                exitProcess(0)
+                            },
+                            AMO_COLLECTION_OVERRIDE_EXIT_DELAY,
+                        )
+                    }
 
-                collectionView.setText(RBSettings.getOverrideAmoCollection(context))
-                userView.setText(RBSettings.getOverrideAmoUser(context))
-                userView.requestFocus()
-                userView.showKeyboard()
-                create()
-            }.show()
+                    collectionView.setText(RBSettings.getOverrideAmoCollection(context))
+                    userView.setText(RBSettings.getOverrideAmoUser(context))
+                    userView.requestFocus()
+                    userView.showKeyboard()
+                    create()
+                }.show()
             true
         }
 
     companion object {
         private const val AMO_COLLECTION_OVERRIDE_EXIT_DELAY = 3000L
+
         //loamen
-        fun getCurrentLocale(): Locale = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            AppCompatDelegate.getApplicationLocales().get(0) ?: Locale.getDefault()
-        } else {
-            Locale.getDefault()
-        })
+        fun getCurrentLocale(): Locale = (
+                AppCompatDelegate.getApplicationLocales().get(0) ?: Locale.getDefault()
+                )
     }
 }
