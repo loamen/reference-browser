@@ -21,17 +21,8 @@ import kotlin.collections.forEach as withEach
 
 class InstalledSearchEnginesSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
-    }
-
-    override fun onPause() {
-        super.onPause()
-        (activity as? SettingsFragment.ActionBarUpdater)?.updateTitle(org.mozilla.reference.browser.R.string.settings)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
         // 当Fragment被销毁时，恢复ActionBar标题
-        (activity as? SettingsFragment.ActionBarUpdater)?.updateTitle(org.mozilla.reference.browser.R.string.settings)
+        (activity as? SettingsFragment.ActionBarUpdater)?.updateTitle(top.yooho.browser.R.string.preference_choose_search_engine)
     }
 
     companion object {
@@ -98,7 +89,6 @@ class InstalledSearchEnginesSettingsFragment : PreferenceFragmentCompat() {
 
     private fun restoreSearchEngines() {
 
-        // TODO loamen
         restoreSearchDefaults(requireComponents.core.store, requireComponents.useCases.searchUseCases)
         refetchSearchEngines()
         languageChanged = false

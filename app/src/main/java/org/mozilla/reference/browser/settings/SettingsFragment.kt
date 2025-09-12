@@ -174,8 +174,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     //loamen 设置搜索引擎
-    private fun getActionBar() = (activity as AppCompatActivity).supportActionBar!!
-
     private fun getClickListenerForSearch(): OnPreferenceClickListener {
         return OnPreferenceClickListener {
             // 如果NavController不可用，使用传统方式替换Fragment
@@ -184,7 +182,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 .replace(R.id.container, InstalledSearchEnginesSettingsFragment())
                 .addToBackStack(null)
                 .commit()
-            getActionBar().setTitle(top.yooho.browser.R.string.preference_choose_search_engine)
             true
         }
     }
