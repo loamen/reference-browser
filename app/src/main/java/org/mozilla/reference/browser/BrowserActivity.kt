@@ -200,5 +200,14 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, createBrowserFragment(sessionId))
             .commit()
+        
+        // 只有在没有打开任何页面时才加载指定网址，且不在地址栏显示
+        if (components.core.store.state.tabs.isEmpty()) {
+            // 使用EXTERNAL标志来避免在地址栏显示URL
+            components.useCases.sessionUseCases.loadUrl.invoke(
+                "https://nav.yooho.top",
+                flags = mozilla.components.concept.engine.EngineSession.LoadUrlFlags.none()
+            )
+        }
     }
 }
