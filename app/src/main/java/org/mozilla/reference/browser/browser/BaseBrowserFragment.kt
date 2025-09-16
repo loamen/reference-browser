@@ -190,11 +190,7 @@ abstract class BaseBrowserFragment :
         )
 
         (toolbar.layoutParams as? CoordinatorLayout.LayoutParams)?.apply {
-            behavior = EngineViewScrollingBehavior(
-                view.context,
-                null,
-                MozacToolbarBehaviorToolbarPosition.BOTTOM,
-            )
+            null
         }
 
         toolbarIntegration.set(
