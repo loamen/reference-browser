@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.Preference.OnPreferenceClickListener
@@ -37,10 +38,12 @@ import org.mozilla.reference.browser.R.string.pref_key_remote_debugging
 import org.mozilla.reference.browser.R.string.pref_key_sign_in
 import org.mozilla.reference.browser.autofill.AutofillPreference
 import org.mozilla.reference.browser.ext.components
+import org.mozilla.reference.browser.ext.getPreference
 import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.sync.BrowserFxAEntryPoint
 import top.yooho.browser.settings.dialogs.LanguageChangeDialog
+import top.yooho.setting.CustomizationSettingsFragment
 import top.yooho.setting.InstalledSearchEnginesSettingsFragment
 import java.util.Locale
 import kotlin.system.exitProcess
@@ -129,6 +132,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
             top.yooho.browser.R.string.setting_item_selected,
             requireContext().components.core.store.state.search.selectedOrDefaultSearchEngine?.name
         )
+        getPreference(top.yooho.browser.R.string.pref_key_customization)?.onPreferenceClickListener =
+            getClickListenerForCustomization()
+
 
         if (!AutofillPreference.isSupported(requireContext())) {
             preferenceAutofill?.isVisible = false
@@ -180,6 +186,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
             parentFragmentManager
                 .beginTransaction()
                 .replace(R.id.container, InstalledSearchEnginesSettingsFragment())
+                .addToBackStack(null)
+                .commit()
+            true
+        }
+    }
+    //loamen 设置自定义插件
+    private fun getClickListenerForCustomization(): OnPreferenceClickListener {
+        return OnPreferenceClickListener {
+            parentFragmentManager
+                .beginTransaction()
+                .replace(R.id.container, CustomizationSettingsFragment())
                 .addToBackStack(null)
                 .commit()
             true
