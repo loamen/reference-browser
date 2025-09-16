@@ -57,6 +57,7 @@ import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.pip.PictureInPictureIntegration
 import org.mozilla.reference.browser.tabs.LastTabFeature
 import mozilla.components.ui.widgets.behavior.ViewPosition as MozacToolbarBehaviorToolbarPosition
+import org.mozilla.reference.browser.ext.enableDynamicBehavior
 
 private const val BOTTOM_TOOLBAR_HEIGHT = 0
 
@@ -190,8 +191,29 @@ abstract class BaseBrowserFragment :
         )
 
         (toolbar.layoutParams as? CoordinatorLayout.LayoutParams)?.apply {
-            null
+            behavior = EngineViewScrollingBehavior(
+                view.context,
+                null,
+                MozacToolbarBehaviorToolbarPosition.TOP,
+            )
         }
+
+        swipeRefreshFeature.set(
+            feature = SwipeRefreshFeature(
+                requireComponents.core.store,
+                requireComponents.useCases.sessionUseCases.reload,
+                swipeRefresh,
+            ),
+            owner = this,
+            view = view,
+        )
+
+        toolbar.enableDynamicBehavior(
+            requireContext(),
+            swipeRefresh,
+            engineView,
+            true
+        )
 
         toolbarIntegration.set(
             feature = ToolbarIntegration(
@@ -375,7 +397,7 @@ abstract class BaseBrowserFragment :
                 context = requireContext(),
                 attrs = null,
                 engineViewParent = swipeRefresh,
-                topToolbarHeight = toolbar.height,
+                topToolbarHeight = resources.getDimensionPixelSize(R.dimen.browser_toolbar_height),
                 bottomToolbarHeight = BOTTOM_TOOLBAR_HEIGHT,
             )
         }
