@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.settings.about.viewholders.AboutItemViewHolder
 
 class AboutPageAdapter(private val listener: AboutPageListener) :
@@ -15,7 +16,7 @@ class AboutPageAdapter(private val listener: AboutPageListener) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AboutItemViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(AboutItemViewHolder.LAYOUT_ID, parent, false)
+            .inflate(R.layout.about_list_item, parent, false)
         return AboutItemViewHolder(view, listener)
     }
 

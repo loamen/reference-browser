@@ -13,6 +13,7 @@
         <item name="android:navigationBarColor">@color/evenDarker</item>
         <item name="android:windowBackground">@color/dark</item>
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
+        <item name="textAccent">@color/accent</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat">
@@ -25,6 +26,7 @@
         <item name="android:navigationBarColor">@color/evenDarker</item>
         <item name="android:windowBackground">@color/dark</item>
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
+        <item name="textAccent">@color/accent</item>
     </style>
 
     <style name="AddonsActivityTheme" parent="AppTheme">

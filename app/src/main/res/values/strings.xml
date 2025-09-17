@@ -224,4 +224,7 @@
     <string name="invalid_url">Invalid URL</string>
     <string name="please_enter_a_valid_url">Please enter a valid URL</string>
     <string name="press_again_to_exit">Press again to exit</string>
+    <string name="about_support">Support</string>
+    <string name="about_privacy_notice">Privacy notice</string>
+    <string name="about_licensing_information">Licensing information</string>
 </resources>

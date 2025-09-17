@@ -30,9 +30,4 @@ class AboutItemViewHolder(
         this.item = item
         binding.aboutItemTitle.text = item.title
     }
-
-    companion object {
-        @SuppressLint("NonConstantResourceId")
-        const val LAYOUT_ID = R.layout.about_list_item
-    }
 }

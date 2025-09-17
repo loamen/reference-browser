@@ -108,4 +108,7 @@
     <string name="invalid_url">无效的URL</string>
     <string name="please_enter_a_valid_url">请输入正确的扩展网址</string>
     <string name="press_again_to_exit">再按一次退出</string>
+    <string name="about_support">用户支持</string>
+    <string name="about_privacy_notice">隐私声明</string>
+    <string name="about_licensing_information">许可信息</string>
 </resources>
