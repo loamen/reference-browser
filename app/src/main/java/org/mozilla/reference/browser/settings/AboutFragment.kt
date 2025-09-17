@@ -68,7 +68,7 @@ class AboutFragment : Fragment() {
         val aboutView = view.findViewById<TextView>(R.id.about_content)
         aboutView.text = content
 
-        val versionInfoView = view.findViewById<TextView>(R.id.version_info)
+        val versionInfoView = view.findViewById<TextView>(R.id.about_text)
         versionInfoView.text = versionInfo
 
         versionInfoView.setOnClickListener { v ->

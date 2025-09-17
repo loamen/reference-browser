@@ -31,4 +31,15 @@
         <item name="mozac_primary_text_color">@color/photonDarkGrey90</item>
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
     </style>
+
+    <style name="AboutItemText" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">?textAccent</item>
+        <item name="android:textSize">@dimen/about_items_text_size</item>
+        <item name="android:paddingStart">@dimen/about_list_item_text_padding</item>
+        <item name="android:paddingEnd">@dimen/about_list_item_text_padding</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:minLines">1</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
 </resources>

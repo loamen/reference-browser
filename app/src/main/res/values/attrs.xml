@@ -7,4 +7,6 @@
         <attr name="titleColor" format="color" />
         <attr name="summaryColor" format="color" />
     </declare-styleable>
+    !-- Small heading, Text link -->
+    <attr name="textAccent" format="reference" />
 </resources>
