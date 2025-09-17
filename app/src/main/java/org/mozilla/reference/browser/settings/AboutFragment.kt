@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import mozilla.components.Build
 import org.mozilla.geckoview.BuildConfig.MOZ_APP_BUILDID
 import org.mozilla.geckoview.BuildConfig.MOZ_APP_VERSION
+import org.mozilla.reference.browser.BrowserActivity
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.settings.about.AboutItem
 import org.mozilla.reference.browser.settings.about.AboutItemType
@@ -148,10 +149,12 @@ class AboutFragment : Fragment(), AboutPageListener {
     }
 
     private fun openExternalLink(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(url)
+        val intent = Intent(requireActivity(), BrowserActivity::class.java).apply {
+            putExtra("EXTRA_URL", url)
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         startActivity(intent)
+        requireActivity().finish()
     }
 
     override fun onDestroyView() {

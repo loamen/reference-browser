@@ -130,6 +130,12 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
                 components.useCases.searchUseCases.selectSearchEngine(baiduEngine)
             }
         }
+
+        // 处理从AboutFragment等传入的URL
+        val extraUrl = intent.getStringExtra("EXTRA_URL")
+        if (extraUrl != null) {
+            components.useCases.sessionUseCases.loadUrl.invoke(extraUrl)
+        }
     }
 
     @Suppress("DEPRECATION") // ComponentActivity wants us to use registerForActivityResult
@@ -208,6 +214,35 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
                 "https://nav.yooho.top",
                 flags = mozilla.components.concept.engine.EngineSession.LoadUrlFlags.none()
             )
+        }
+    }
+
+    /**
+     *  loamen
+     * 打开浏览器，支持新标签页和隐私模式
+     */
+    fun openToBrowser(url : String? = null, newTab : Boolean = false, private: Boolean = false){
+        if (url != null) {
+            if (newTab) {
+                components.useCases.tabsUseCases.addTab(
+                    url = url,
+                    selectTab = true,
+                    private = private,
+                )
+            } else {
+                components.useCases.sessionUseCases.loadUrl(
+                    url = url
+                )
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.getStringExtra("EXTRA_URL") != null) {
+            val url = intent.getStringExtra("EXTRA_URL")
+            openToBrowser(url!!,true)
+//            components.useCases.sessionUseCases.loadUrl.invoke(url!!)
         }
     }
 }
