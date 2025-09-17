@@ -458,10 +458,14 @@ abstract class BaseBrowserFragment :
         if (enabled) {
             activity?.enterImmersiveMode()
             toolbar.visibility = View.GONE
+            toolbar.collapse()
             engineView.setDynamicToolbarMaxHeight(0)
+            // Without this, fullscreen has a margin at the top.
+            engineView.setVerticalClipping(0)
         } else {
             activity?.exitImmersiveMode()
             toolbar.visibility = View.VISIBLE
+            toolbar.expand()
             engineView.setDynamicToolbarMaxHeight(resources.getDimensionPixelSize(R.dimen.browser_toolbar_height))
         }
     }
