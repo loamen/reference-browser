@@ -50,4 +50,12 @@ object Settings {
 
     fun isAmoCollectionOverrideConfigured(context: Context): Boolean =
         getOverrideAmoUser(context).isNotEmpty() && getOverrideAmoCollection(context).isNotEmpty()
+
+    //loamen 主题
+    fun getAppTheme(context: Context) : Int {
+        val themeString = PreferenceManager.getDefaultSharedPreferences(context).getString(
+            context.getString(top.yooho.browser.R.string.pref_key_theme), context.getString(top.yooho.browser.R.string.preferences_theme_default)
+        )
+        return themeString!!.toInt()
+    }
 }
