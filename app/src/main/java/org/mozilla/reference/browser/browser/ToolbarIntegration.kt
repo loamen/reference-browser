@@ -153,11 +153,11 @@ class ToolbarIntegration(
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             },
-            TextMenuCandidate(text = context.getString(R.string.synced_tabs)) {
-                val intent = Intent(context, SyncedTabsActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(intent)
-            },
+//            TextMenuCandidate(text = context.getString(R.string.synced_tabs)) {
+//                val intent = Intent(context, SyncedTabsActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                context.startActivity(intent)
+//            },
             TextMenuCandidate(text = context.getString(R.string.report_issue)) {
                 tabsUseCases.addTab(
                     url = context.getString(top.yooho.browser.R.string.const_support_url),
