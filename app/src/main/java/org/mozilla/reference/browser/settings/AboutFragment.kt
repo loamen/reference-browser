@@ -54,7 +54,8 @@ class AboutFragment : Fragment(), AboutPageListener {
         val aboutText = try {
             val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
             val geckoVersion = PackageInfoCompat.getLongVersionCode(packageInfo).toString() + " GV: " +
-                MOZ_APP_VERSION + "-" + MOZ_APP_BUILDID
+                    MOZ_APP_VERSION
+//            + "-" + MOZ_APP_BUILDID
             String.format(
                 "%s (Build #%s)\n",
                 packageInfo.versionName,
@@ -65,16 +66,12 @@ class AboutFragment : Fragment(), AboutPageListener {
         }
 
         val versionInfo = String.format(
-            "%s \uD83D\uDCE6: %s, %s\n\uD83D\uDEA2: %s",
+            "%s \uD83D\uDCE6: %s, \n\uD83D\uDEA2: %s",
             aboutText,
             Build.VERSION,
-            Build.GIT_HASH,
             Build.APPLICATION_SERVICES_VERSION,
         )
-        val content = HtmlCompat.fromHtml(
-            resources.getString(R.string.about_content, appName),
-            FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM,
-        )
+        val content = getString(R.string.about_content, appName)
 
         val aboutView = view.findViewById<TextView>(R.id.about_content)
         aboutView.text = content
@@ -100,8 +97,8 @@ class AboutFragment : Fragment(), AboutPageListener {
         aboutList.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                DividerItemDecoration.VERTICAL
-            )
+                DividerItemDecoration.VERTICAL,
+            ),
         )
 
         aboutPageAdapter?.submitList(populateAboutList())
@@ -112,25 +109,25 @@ class AboutFragment : Fragment(), AboutPageListener {
             AboutPageItem(
                 AboutItem.ExternalLink(
                     AboutItemType.SUPPORT,
-                    "https://support.mozilla.org"
+                    "https://support.mozilla.org",
                 ),
-                getString(R.string.about_support)
+                getString(R.string.about_support),
             ),
 
             AboutPageItem(
                 AboutItem.ExternalLink(
                     AboutItemType.PRIVACY_NOTICE,
-                    "https://www.mozilla.org/privacy"
+                    "https://www.mozilla.org/privacy",
                 ),
-                getString(R.string.about_privacy_notice)
+                getString(R.string.about_privacy_notice),
             ),
             AboutPageItem(
                 AboutItem.ExternalLink(
                     AboutItemType.LICENSING_INFO,
-                    "about:license"
+                    "about:license",
                 ),
-                getString(R.string.about_licensing_information)
-            )
+                getString(R.string.about_licensing_information),
+            ),
         )
     }
 
@@ -139,9 +136,11 @@ class AboutFragment : Fragment(), AboutPageListener {
             is AboutItem.ExternalLink -> {
                 openExternalLink(item.url)
             }
+
             is AboutItem.Libraries -> {
                 // 处理开源库点击事件
             }
+
             is AboutItem.Crashes -> {
                 // 处理崩溃报告点击事件
             }

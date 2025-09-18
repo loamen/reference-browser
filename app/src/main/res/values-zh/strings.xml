@@ -71,15 +71,7 @@
     <string name="datareporting_notification_title">参考浏览器</string>
     <string name="datareporting_notification_summary">为了改善您的体验，参考浏览器会自动向 Yooho 发送一些信息。</string>
     <string name="default_notification_channel">浏览器</string>
-    <string name="about_content"><![CDATA[
-<p>%1$s 让您掌控一切。</p>
-<p>将其用作参考：
-    <br>&bull; 学习如何构建自己的浏览器。
-    <br>&bull; 为简化浏览器构建做出贡献。
-    <br>&bull; 提交错误报告！
-</p>
-<p>%1$s 由 Yooho 制作。我们的使命是促进一个健康、开放的互联网。<br/>
-    ]]></string>
+    <string name="about_content">%1$s 由 Yooho 倾力打造。</string>
     <string name="menu_share_with">分享到…</string>
     <string name="toast_copied">已复制！</string>
     <string name="fxa_received_tab_channel_name">接收的标签页</string>
