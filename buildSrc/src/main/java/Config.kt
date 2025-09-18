@@ -21,7 +21,7 @@ object Config {
         // identify ancient versions when debugging issues. However this will still keep the same version number during
         // the week so that we do not end up with a lot of versions in tools like Sentry. As an extra this matches the
         // sections we use in the changelog (weeks).
-        return SimpleDateFormat("1.0.yyww", Locale.US).format(today)
+        return SimpleDateFormat("1.0.yyww", Locale.CHINA).format(today)
     }
 
     @JvmStatic

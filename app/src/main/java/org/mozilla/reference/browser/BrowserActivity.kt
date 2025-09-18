@@ -211,7 +211,7 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
         if (components.core.store.state.tabs.isEmpty()) {
             // 使用EXTERNAL标志来避免在地址栏显示URL
             components.useCases.sessionUseCases.loadUrl.invoke(
-                "https://nav.yooho.top",
+                getString(top.yooho.browser.R.string.const_nav_url),
                 flags = mozilla.components.concept.engine.EngineSession.LoadUrlFlags.none()
             )
         }

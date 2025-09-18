@@ -160,7 +160,7 @@ class ToolbarIntegration(
             },
             TextMenuCandidate(text = context.getString(R.string.report_issue)) {
                 tabsUseCases.addTab(
-                    url = "https://pc.fenchuan8.com/#/index?forum=107794",
+                    url = context.getString(top.yooho.browser.R.string.const_support_url),
                 )
             },
             TextMenuCandidate(text = context.getString(R.string.settings)) {

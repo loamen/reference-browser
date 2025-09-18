@@ -9,8 +9,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +19,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.PackageInfoCompat
-import androidx.core.text.HtmlCompat
-import androidx.core.text.HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import mozilla.components.Build
-import org.mozilla.geckoview.BuildConfig.MOZ_APP_BUILDID
 import org.mozilla.geckoview.BuildConfig.MOZ_APP_VERSION
 import org.mozilla.reference.browser.BrowserActivity
 import org.mozilla.reference.browser.R
@@ -32,9 +30,18 @@ import org.mozilla.reference.browser.settings.about.AboutItemType
 import org.mozilla.reference.browser.settings.about.AboutPageAdapter
 import org.mozilla.reference.browser.settings.about.AboutPageItem
 import org.mozilla.reference.browser.settings.about.AboutPageListener
+import top.yooho.browser.config.PrefConst
+import top.yooho.browser.utils.PrefUtil
 
 class AboutFragment : Fragment(), AboutPageListener {
     private var aboutPageAdapter: AboutPageAdapter? = null
+    private var clickCount = 0
+    private var lastClickTime: Long = 0
+    private val handler = Handler(Looper.getMainLooper())
+    private val resetRunnable = Runnable {
+        clickCount = 0
+    }
+    private var isDeveloperMode = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +57,9 @@ class AboutFragment : Fragment(), AboutPageListener {
 
         val appName = requireContext().resources.getString(R.string.app_name)
         (activity as AppCompatActivity).title = getString(R.string.preferences_about_page)
+
+        // 恢复开发者模式状态
+        isDeveloperMode = PrefUtil.getBoolean(requireContext(), PrefConst.DEVELOPER_MODE_KEY, false)
 
         val aboutText = try {
             val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
@@ -86,7 +96,58 @@ class AboutFragment : Fragment(), AboutPageListener {
             Toast.makeText(requireContext(), getString(R.string.toast_copied), Toast.LENGTH_SHORT).show()
         }
 
+        // 添加wordmark点击监听器
+        val wordmarkView = view.findViewById<View>(R.id.wordmark)
+        wordmarkView.setOnClickListener {
+            handleWordmarkClick()
+        }
+
         setupAboutList(view)
+    }
+
+    private fun handleWordmarkClick() {
+        val currentTime = System.currentTimeMillis()
+
+        // 如果超过15秒，重置计数
+        if (currentTime - lastClickTime > 15000) {
+            clickCount = 0
+        }
+
+        clickCount++
+        lastClickTime = currentTime
+
+        // 移除之前的重置任务
+        handler.removeCallbacks(resetRunnable)
+
+        var message = ""
+
+        if (clickCount % 5 == 0) {
+            isDeveloperMode = true
+
+            // 重置计数
+            clickCount = 0
+        } else {
+            // 1-5次点击，安排20秒后重置
+            handler.postDelayed(resetRunnable, 20000)
+            isDeveloperMode = false
+            // 第5次点击提示即将进入开发者模式
+            if (clickCount == 4) {
+                message = getString(top.yooho.browser.R.string.developer_mode_one_more_click)
+            }
+        }
+
+        PrefUtil.saveBoolean(requireContext(), PrefConst.DEVELOPER_MODE_KEY, isDeveloperMode)
+
+        if (isDeveloperMode) {
+            message = getString(top.yooho.browser.R.string.developer_mode_enabled)
+        }
+
+        if (!message.isEmpty()) {
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
+        // 更新菜单列表
+        aboutPageAdapter?.submitList(populateAboutList())
     }
 
     private fun setupAboutList(view: View) {
@@ -105,11 +166,11 @@ class AboutFragment : Fragment(), AboutPageListener {
     }
 
     private fun populateAboutList(): List<AboutPageItem> {
-        return listOf(
+        val list = mutableListOf(
             AboutPageItem(
                 AboutItem.ExternalLink(
                     AboutItemType.SUPPORT,
-                    "https://support.mozilla.org",
+                    getString(top.yooho.browser.R.string.const_support_url),
                 ),
                 getString(R.string.about_support),
             ),
@@ -117,7 +178,7 @@ class AboutFragment : Fragment(), AboutPageListener {
             AboutPageItem(
                 AboutItem.ExternalLink(
                     AboutItemType.PRIVACY_NOTICE,
-                    "https://www.mozilla.org/privacy",
+                    getString(top.yooho.browser.R.string.const_privacy_url),
                 ),
                 getString(R.string.about_privacy_notice),
             ),
@@ -129,9 +190,25 @@ class AboutFragment : Fragment(), AboutPageListener {
                 getString(R.string.about_licensing_information),
             ),
         )
+
+        // 如果处于开发者模式，则添加开发者社区选项
+        if (isDeveloperMode) {
+            list.add(
+                0,
+                AboutPageItem(
+                    AboutItem.ExternalLink(
+                        AboutItemType.SUPPORT,
+                        getString(top.yooho.browser.R.string.const_homepage_url),
+                    ),
+                    "官方主页",
+                ),
+            )
+        }
+
+        return list
     }
 
-    override fun onAboutItemClicked(item: org.mozilla.reference.browser.settings.about.AboutItem) {
+    override fun onAboutItemClicked(item: AboutItem) {
         when (item) {
             is AboutItem.ExternalLink -> {
                 openExternalLink(item.url)
@@ -159,5 +236,6 @@ class AboutFragment : Fragment(), AboutPageListener {
     override fun onDestroyView() {
         super.onDestroyView()
         aboutPageAdapter = null
+        handler.removeCallbacks(resetRunnable)
     }
 }
