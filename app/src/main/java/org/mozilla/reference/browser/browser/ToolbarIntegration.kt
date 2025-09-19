@@ -127,18 +127,18 @@ class ToolbarIntegration(
             ) { checked ->
                 sessionUseCases.requestDesktopSite.invoke(checked)
             },
-            if (webAppUseCases.isPinningSupported()) {
-                TextMenuCandidate(
-                    text = context.getString(R.string.add_to_homescreen),
-                    containerStyle = ContainerStyle(
-                        isVisible = webAppUseCases.isPinningSupported(),
-                    ),
-                ) {
-                    scope.launch { webAppUseCases.addToHomescreen() }
-                }
-            } else {
-                null
-            },
+//            if (webAppUseCases.isPinningSupported()) {
+//                TextMenuCandidate(
+//                    text = context.getString(R.string.add_to_homescreen),
+//                    containerStyle = ContainerStyle(
+//                        isVisible = webAppUseCases.isPinningSupported(),
+//                    ),
+//                ) {
+//                    scope.launch { webAppUseCases.addToHomescreen() }
+//                }
+//            } else {
+//                null
+//            },
             TextMenuCandidate(
                 text = context.getString(R.string.find_in_page),
                 start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_search_24),
@@ -163,7 +163,7 @@ class ToolbarIntegration(
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             },
-        ) as NestedMenuCandidate
+        )
 
         return sessionMenuItems + listOf(
             candidate,

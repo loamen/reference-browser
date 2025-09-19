@@ -3,13 +3,12 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="AppThemeNotActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppThemeNotActionBar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
 
         <item name="colorPrimary">@color/dark</item>
         <item name="colorPrimaryDark">@color/evenDarker</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="colorSurface">@color/dark</item>
 
         <item name="android:navigationBarColor">@color/evenDarker</item>
         <item name="android:windowBackground">@color/dark</item>
@@ -17,13 +16,12 @@
         <item name="textAccent">@color/accent</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.Material3.DayNight">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
 
         <item name="colorPrimary">@color/dark</item>
         <item name="colorPrimaryDark">@color/evenDarker</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="colorSurface">@color/dark</item>
 
         <item name="android:navigationBarColor">@color/evenDarker</item>
         <item name="android:windowBackground">@color/dark</item>
