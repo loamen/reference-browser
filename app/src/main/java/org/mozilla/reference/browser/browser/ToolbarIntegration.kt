@@ -23,13 +23,16 @@ import mozilla.components.browser.storage.sync.PlacesHistoryStorage
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.display.DisplayToolbar
 import mozilla.components.concept.menu.MenuController
+import mozilla.components.concept.menu.Side
 import mozilla.components.concept.menu.candidate.CompoundMenuCandidate
 import mozilla.components.concept.menu.candidate.ContainerStyle
 import mozilla.components.concept.menu.candidate.DrawableMenuIcon
 import mozilla.components.concept.menu.candidate.MenuCandidate
+import mozilla.components.concept.menu.candidate.NestedMenuCandidate
 import mozilla.components.concept.menu.candidate.RowMenuCandidate
 import mozilla.components.concept.menu.candidate.SmallMenuCandidate
 import mozilla.components.concept.menu.candidate.TextMenuCandidate
+import mozilla.components.feature.addons.menu.createWebExtensionMenuCandidate
 import mozilla.components.feature.pwa.WebAppUseCases
 import mozilla.components.feature.session.SessionUseCases
 import mozilla.components.feature.tabs.TabsUseCases
@@ -44,7 +47,6 @@ import org.mozilla.reference.browser.addons.AddonsActivity
 import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.share
 import org.mozilla.reference.browser.settings.SettingsActivity
-import org.mozilla.reference.browser.tabs.synced.SyncedTabsActivity
 
 @Suppress("LongParameterList")
 class ToolbarIntegration(
@@ -52,7 +54,7 @@ class ToolbarIntegration(
     toolbar: BrowserToolbar,
     toolbarParentView: View,
     historyStorage: PlacesHistoryStorage,
-    store: BrowserStore,
+    private val store: BrowserStore,
     private val sessionUseCases: SessionUseCases,
     private val tabsUseCases: TabsUseCases,
     private val webAppUseCases: WebAppUseCases,
@@ -110,12 +112,14 @@ class ToolbarIntegration(
     private fun sessionMenuItems(sessionState: SessionState): List<MenuCandidate> =
         listOfNotNull(
             menuToolbar(sessionState),
-            TextMenuCandidate(context.getString(R.string.share)) {
+            TextMenuCandidate(context.getString(R.string.share),
+                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_share_android_24)) {
                 val url = sessionState.content.url
                 context.share(url)
             },
             CompoundMenuCandidate(
                 text = context.getString(R.string.request_desktop_site),
+                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_device_desktop_24),
                 isChecked = sessionState.content.desktopMode,
                 end = CompoundMenuCandidate.ButtonType.SWITCH,
             ) { checked ->
@@ -135,6 +139,7 @@ class ToolbarIntegration(
             },
             TextMenuCandidate(
                 text = context.getString(R.string.find_in_page),
+                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_search_24),
             ) {
                 FindInPageIntegration.launch?.invoke()
             },
@@ -147,23 +152,39 @@ class ToolbarIntegration(
             emptyList()
         }
 
-        return sessionMenuItems + listOf(
-            TextMenuCandidate(text = context.getString(R.string.add_ons)) {
+        // 使用正确的调用方式，从store获取BrowserState来创建WebExtension菜单项
+        val candidate = store.state.createWebExtensionMenuCandidate(
+            context,
+            appendExtensionSubMenuAt = Side.END,
+            onAddonsManagerTapped = {
                 val intent = Intent(context, AddonsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
             },
+        ) as NestedMenuCandidate
+
+        return sessionMenuItems + listOf(
+            candidate,
+
+//            TextMenuCandidate(text = context.getString(R.string.add_ons)) {
+//                val intent = Intent(context, AddonsActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                context.startActivity(intent)
+//            },
 //            TextMenuCandidate(text = context.getString(R.string.synced_tabs)) {
 //                val intent = Intent(context, SyncedTabsActivity::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //                context.startActivity(intent)
 //            },
-            TextMenuCandidate(text = context.getString(R.string.report_issue)) {
+            TextMenuCandidate(
+                text = context.getString(R.string.report_issue),
+                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_notification_24)) {
                 tabsUseCases.addTab(
                     url = context.getString(top.yooho.browser.R.string.const_support_url),
                 )
             },
-            TextMenuCandidate(text = context.getString(R.string.settings)) {
+            TextMenuCandidate(text = context.getString(R.string.settings),
+                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_settings_24)) {
                 val intent = Intent(context, SettingsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)

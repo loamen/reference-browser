@@ -24,7 +24,7 @@ class AddonsActivity : AppCompatActivity() {
         enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT))
         window.setupPersistentInsets(true)
 
-        setTitle(R.string.add_ons)
+//        setTitle(R.string.add_ons)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().apply {
