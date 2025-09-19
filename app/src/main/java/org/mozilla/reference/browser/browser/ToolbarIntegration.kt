@@ -178,19 +178,19 @@ class ToolbarIntegration(
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //                context.startActivity(intent)
 //            },
-//            TextMenuCandidate(
-//                text = context.getString(R.string.report_issue),
-//                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_notification_24)) {
-//                tabsUseCases.addTab(
-//                    url = context.getString(top.yooho.browser.R.string.const_support_url),
-//                )
-//            },
-//            TextMenuCandidate(text = context.getString(R.string.settings),
-//                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_settings_24)) {
-//                val intent = Intent(context, SettingsActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                context.startActivity(intent)
-//            },
+            TextMenuCandidate(
+                text = context.getString(R.string.report_issue),
+                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_notification_24)) {
+                tabsUseCases.addTab(
+                    url = context.getString(top.yooho.browser.R.string.const_support_url),
+                )
+            },
+            TextMenuCandidate(text = context.getString(R.string.settings),
+                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_settings_24)) {
+                val intent = Intent(context, SettingsActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+            },
         )
     }
 
