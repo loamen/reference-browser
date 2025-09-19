@@ -47,6 +47,8 @@ import org.mozilla.reference.browser.addons.AddonsActivity
 import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.share
 import org.mozilla.reference.browser.settings.SettingsActivity
+import org.mozilla.reference.browser.tabs.synced.SyncedTabsActivity
+import mozilla.components.ui.colors.R as colorsR
 
 @Suppress("LongParameterList")
 class ToolbarIntegration(
@@ -213,6 +215,9 @@ class ToolbarIntegration(
 
         toolbar.display.setUrlBackground(
             ResourcesCompat.getDrawable(context.resources, R.drawable.url_background, context.theme),
+        )
+        toolbar.display.colors = toolbar.display.colors.copy(
+            text = ResourcesCompat.getColor(context.resources, colorsR.color.photonWhite, context.theme),
         )
 
         ImeInsetsSynchronizer.setup(
