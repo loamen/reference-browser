@@ -155,42 +155,42 @@ class ToolbarIntegration(
         }
 
         // 使用正确的调用方式，从store获取BrowserState来创建WebExtension菜单项
-        val candidate = store.state.createWebExtensionMenuCandidate(
-            context,
-            appendExtensionSubMenuAt = Side.END,
-            onAddonsManagerTapped = {
-                val intent = Intent(context, AddonsActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(intent)
-            },
-        )
-
-        return sessionMenuItems + listOf(
-            candidate,
-
-//            TextMenuCandidate(text = context.getString(R.string.add_ons)) {
+//        val candidate = store.state.createWebExtensionMenuCandidate(
+//            context,
+//            appendExtensionSubMenuAt = Side.END,
+//            onAddonsManagerTapped = {
 //                val intent = Intent(context, AddonsActivity::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //                context.startActivity(intent)
 //            },
+//        )
+
+        return sessionMenuItems + listOf(
+//            candidate,
+
+            TextMenuCandidate(text = context.getString(mozilla.components.feature.addons.R.string.mozac_feature_addons_addons)) {
+                val intent = Intent(context, AddonsActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+            },
 //            TextMenuCandidate(text = context.getString(R.string.synced_tabs)) {
 //                val intent = Intent(context, SyncedTabsActivity::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //                context.startActivity(intent)
 //            },
-            TextMenuCandidate(
-                text = context.getString(R.string.report_issue),
-                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_notification_24)) {
-                tabsUseCases.addTab(
-                    url = context.getString(top.yooho.browser.R.string.const_support_url),
-                )
-            },
-            TextMenuCandidate(text = context.getString(R.string.settings),
-                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_settings_24)) {
-                val intent = Intent(context, SettingsActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(intent)
-            },
+//            TextMenuCandidate(
+//                text = context.getString(R.string.report_issue),
+//                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_notification_24)) {
+//                tabsUseCases.addTab(
+//                    url = context.getString(top.yooho.browser.R.string.const_support_url),
+//                )
+//            },
+//            TextMenuCandidate(text = context.getString(R.string.settings),
+//                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_settings_24)) {
+//                val intent = Intent(context, SettingsActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//                context.startActivity(intent)
+//            },
         )
     }
 
