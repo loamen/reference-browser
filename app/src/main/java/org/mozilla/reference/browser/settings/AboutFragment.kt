@@ -198,9 +198,9 @@ class AboutFragment : Fragment(), AboutPageListener {
                 AboutPageItem(
                     AboutItem.ExternalLink(
                         AboutItemType.SUPPORT,
-                        getString(top.yooho.browser.R.string.const_homepage_url),
+                        "about:config",
                     ),
-                    "官方主页",
+                    getString(R.string.about_config),
                 ),
             )
         }

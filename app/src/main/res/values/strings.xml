@@ -169,7 +169,7 @@
     <string name="default_notification_channel">Browser</string>
 
     <!-- About content -->
-    <string name="about_content">%1$s is produced by Yooho.</string>
+    <string name="about_content">%1$s is produced by Abuhu.</string>
 
     <string name="menu_share_with">Share with…</string>
     <string name="toast_copied">Copied!</string>
@@ -218,4 +218,5 @@
     <string name="about_support">Support</string>
     <string name="about_privacy_notice">Privacy notice</string>
     <string name="about_licensing_information">Licensing information</string>
+    <string name="about_config">Browser config</string>
 </resources>

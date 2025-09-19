@@ -493,7 +493,7 @@ abstract class BaseBrowserFragment :
 
     /**
      * loamen
-     *  * Install an add-on from a file.
+     *  * Install an add-on from a file. 下载完成后自动安装
      *
      * @param filePath The path to the file to install.
      */

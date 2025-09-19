@@ -72,7 +72,7 @@
     <string name="datareporting_notification_title">参考浏览器</string>
     <string name="datareporting_notification_summary">为了改善您的体验，参考浏览器会自动向 Yooho 发送一些信息。</string>
     <string name="default_notification_channel">浏览器</string>
-    <string name="about_content">%1$s 由 Yooho 倾力打造。</string>
+    <string name="about_content">%1$s 由 布狐 倾力打造。</string>
     <string name="menu_share_with">分享到…</string>
     <string name="toast_copied">已复制！</string>
     <string name="fxa_received_tab_channel_name">接收的标签页</string>
@@ -101,7 +101,8 @@
     <string name="invalid_url">无效的URL</string>
     <string name="please_enter_a_valid_url">请输入正确的扩展网址</string>
     <string name="press_again_to_exit">再按一次退出</string>
-    <string name="about_support">用户支持</string>
+    <string name="about_support">使用帮助</string>
     <string name="about_privacy_notice">隐私声明</string>
     <string name="about_licensing_information">许可信息</string>
+    <string name="about_config">浏览器配置</string>
 </resources>
