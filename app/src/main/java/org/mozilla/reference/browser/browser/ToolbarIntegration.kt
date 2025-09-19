@@ -180,9 +180,18 @@ class ToolbarIntegration(
         )
         toolbar.display.displayIndicatorSeparator = true
         toolbar.display.menuController = menuController
+        toolbar.display.colors = toolbar.display.colors.copy(
+            text = ContextCompat.getColor(context, R.color.toolbarTextColor),
+            hint = ContextCompat.getColor(context, R.color.toolbarTextColor),
+            menu = ContextCompat.getColor(context, R.color.icons)
+        )
 
         toolbar.display.hint = context.getString(R.string.toolbar_hint)
         toolbar.edit.hint = context.getString(R.string.toolbar_hint)
+        toolbar.edit.colors = toolbar.edit.colors.copy(
+            text = ContextCompat.getColor(context, R.color.toolbarTextColor),
+            hint = ContextCompat.getColor(context, R.color.toolbarTextColor)
+        )
 
         ToolbarAutocompleteFeature(toolbar).apply {
             updateAutocompleteProviders(
