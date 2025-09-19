@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
+<?xml version="1.0" encoding="utf-8"?><!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
     <string name="app_name">Yooho Browser</string>
-
+    <string name="organization_name">Abuhu</string>
     <!-- Text shown in the toolbar if it is empty -->
     <string name="toolbar_hint">Search or enter address</string>
 
@@ -166,7 +165,7 @@
 
     <!-- Summary of the notification shown on app startup informing about the data policy -->
     <string name="datareporting_notification_summary">To improve your experience, Reference Browser automatically sends some information to Yooho.</string>
-    
+
     <string name="default_notification_channel">Browser</string>
 
     <!-- About content -->

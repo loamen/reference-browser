@@ -34,7 +34,7 @@ class Analytics(
     val crashReporter: CrashReporter by lazy {
         val socorroService = MozillaSocorroService(
             context,
-            appName = "ReferenceBrowser",
+            appName = context.getString(R.string.app_name),
             version = MOZ_APP_VERSION,
             buildId = MOZ_APP_BUILDID,
             vendor = MOZ_APP_VENDOR,
@@ -66,7 +66,7 @@ class Analytics(
             shouldPrompt = CrashReporter.Prompt.ALWAYS,
             promptConfiguration = CrashReporter.PromptConfiguration(
                 appName = context.getString(R.string.app_name),
-                organizationName = "Mozilla",
+                organizationName = context.getString(R.string.organization_name),
             ),
             nonFatalCrashIntent = PendingIntent
                 .getBroadcast(context, 0, Intent(BrowserApplication.NON_FATAL_CRASH_BROADCAST), flags),

@@ -33,7 +33,7 @@
         android:layout_toEndOf="@id/synced_tabs_item_image"
         android:ellipsize="end"
         android:maxLines="1"
-        tools:text="Mozilla" />
+        tools:text="@string/organization_name" />
 
     <TextView
         android:id="@+id/synced_tabs_item_desc"
@@ -45,5 +45,5 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        tools:text="https://www.mozilla.org" />
+        tools:text="@string/const_homepage_url" />
 </RelativeLayout>
