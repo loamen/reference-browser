@@ -8,12 +8,15 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import org.mozilla.reference.browser.ext.getPreferenceKey
+import org.mozilla.reference.browser.settings.SettingsFragment
 import top.yooho.browser.R
 
 class CustomizationSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.customization_preferences, rootKey)
+        // 当Fragment创建是时，修改ActionBar标题
+        (activity as? SettingsFragment.ActionBarUpdater)?.updateTitle(R.string.customization_settings)
     }
 
     override fun onResume() {
@@ -21,10 +24,9 @@ class CustomizationSettingsFragment : PreferenceFragmentCompat() {
         setupPreferences()
         getActionBar().apply{
             show()
-            setTitle(R.string.customization_settings)
             setDisplayHomeAsUpEnabled(true)
-            setBackgroundDrawable(
-                ContextCompat.getColor(requireContext(), R.color.action_bar).toDrawable())
+//            setBackgroundDrawable(
+//                ContextCompat.getColor(requireContext(), R.color.action_bar).toDrawable())
         }
     }
 
