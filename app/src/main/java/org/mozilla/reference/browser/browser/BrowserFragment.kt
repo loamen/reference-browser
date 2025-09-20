@@ -120,14 +120,14 @@ class BrowserFragment :
             view = view,
         )
 
-        webExtToolbarFeature.set(
-            feature = WebExtensionToolbarFeature(
-                toolbar,
-                requireContext().components.core.store,
-            ),
-            owner = this,
-            view = view,
-        )
+//        webExtToolbarFeature.set(
+//            feature = WebExtensionToolbarFeature(
+//                toolbar,
+//                requireContext().components.core.store,
+//            ),
+//            owner = this,
+//            view = view,
+//        )
 
         windowFeature.set(
             feature = WindowFeature(
