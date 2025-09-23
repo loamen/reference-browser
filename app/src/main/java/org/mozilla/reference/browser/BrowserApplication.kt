@@ -32,11 +32,6 @@ open class BrowserApplication : Application() {
     val components by lazy { Components(this) }
 
     override fun onCreate() {
-        // 跟随系统切换深色/浅色模式
-        AppCompatDelegate.setDefaultNightMode(
-            Settings.getAppTheme(this)
-        )
-
         super.onCreate()
 
         setupCrashReporting(this)
@@ -53,6 +48,12 @@ open class BrowserApplication : Application() {
             // situation where we create a GeckoRuntime from the Gecko child process (
             return
         }
+
+        // 跟随系统切换深色/浅色模式
+        PreferenceManager.setDefaultValues(this, R.xml.default_preferences, false)
+        AppCompatDelegate.setDefaultNightMode(
+            Settings.getAppTheme(this)
+        )
 
         components.core.engine.warmUp()
 
