@@ -111,17 +111,29 @@ class ToolbarIntegration(
         return RowMenuCandidate(listOf(forward, refresh, stop))
     }
 
-    private fun sessionMenuItems(sessionState: SessionState): List<MenuCandidate> =
-        listOfNotNull(
+    private fun sessionMenuItems(sessionState: SessionState): List<MenuCandidate> {
+        val tint = ContextCompat.getColor(context, R.color.icons)
+
+        return listOfNotNull(
             menuToolbar(sessionState),
-            TextMenuCandidate(context.getString(R.string.share),
-                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_share_android_24)) {
+            TextMenuCandidate(
+                context.getString(R.string.share),
+                start = DrawableMenuIcon(
+                    context,
+                    mozilla.components.ui.icons.R.drawable.mozac_ic_share_android_24,
+                    tint = tint
+                )
+            ) {
                 val url = sessionState.content.url
                 context.share(url)
             },
             CompoundMenuCandidate(
                 text = context.getString(R.string.request_desktop_site),
-                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_device_desktop_24),
+                start = DrawableMenuIcon(
+                    context,
+                    mozilla.components.ui.icons.R.drawable.mozac_ic_device_desktop_24,
+                    tint = tint
+                ),
                 isChecked = sessionState.content.desktopMode,
                 end = CompoundMenuCandidate.ButtonType.SWITCH,
             ) { checked ->
@@ -141,11 +153,16 @@ class ToolbarIntegration(
 //            },
             TextMenuCandidate(
                 text = context.getString(R.string.find_in_page),
-                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_search_24),
+                start = DrawableMenuIcon(
+                    context,
+                    mozilla.components.ui.icons.R.drawable.mozac_ic_search_24,
+                    tint = tint
+                ),
             ) {
                 FindInPageIntegration.launch?.invoke()
             },
         )
+    }
 
     private fun menuItems(sessionState: SessionState?): List<MenuCandidate> {
         val sessionMenuItems = if (sessionState != null) {
@@ -165,6 +182,8 @@ class ToolbarIntegration(
             },
         )
 
+        val tint = ContextCompat.getColor(context, R.color.icons)
+
         return sessionMenuItems + listOf(
             candidate,
 
@@ -180,13 +199,24 @@ class ToolbarIntegration(
 //            },
             TextMenuCandidate(
                 text = context.getString(R.string.report_issue),
-                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_notification_24)) {
+                start = DrawableMenuIcon(
+                    context,
+                    mozilla.components.ui.icons.R.drawable.mozac_ic_notification_24,
+                    tint = tint
+                )
+            ) {
                 tabsUseCases.addTab(
                     url = context.getString(top.yooho.browser.R.string.const_support_url),
                 )
             },
-            TextMenuCandidate(text = context.getString(R.string.settings),
-                start = DrawableMenuIcon(context, mozilla.components.ui.icons.R.drawable.mozac_ic_settings_24)) {
+            TextMenuCandidate(
+                text = context.getString(R.string.settings),
+                start = DrawableMenuIcon(
+                    context,
+                    mozilla.components.ui.icons.R.drawable.mozac_ic_settings_24,
+                    tint = tint
+                )
+            ) {
                 val intent = Intent(context, SettingsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
@@ -213,9 +243,9 @@ class ToolbarIntegration(
             )
         }
 
-        toolbar.display.setUrlBackground(
-            ResourcesCompat.getDrawable(context.resources, R.drawable.url_background, context.theme),
-        )
+//        toolbar.display.setUrlBackground(
+//            ResourcesCompat.getDrawable(context.resources, R.drawable.url_background, context.theme),
+//        )
 //        toolbar.display.colors = toolbar.display.colors.copy(
 //            text = ResourcesCompat.getColor(context.resources, colorsR.color.photonWhite, context.theme),
 //        )

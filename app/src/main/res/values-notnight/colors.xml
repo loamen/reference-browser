@@ -9,13 +9,14 @@
     <color name="dark">#FFFFFFFF</color> <!-- 白色，白天背景 -->
     <color name="evenDarker">#FFF5F5F5</color> <!-- 浅灰色，白天次级背景 -->
     <color name="accent">#ff00BCD4</color>
-    <color name="grey_100">#E7E7E7</color>
+    <color name="icons">@color/fx_mobile_text_color_primary</color>
+<!--    <color name="grey_900">#E7E7E7</color>-->
 
     <!-- Text -->
     <!-- Primary text -->
     <color name="fx_mobile_text_color_primary">@color/photonDarkGrey90</color>
     <!-- Secondary text -->
-    <color name="fx_mobile_text_color_secondary">@color/photonDarkGrey05</color>
+    <color name="fx_mobile_text_color_secondary">@color/photonDarkGrey05</color>r>
     <!-- Search -->
-    <color name="fx_mobile_layer_color_3">@color/grey_100</color>
+    <color name="fx_mobile_layer_color_3">#E7E7E7</color>
 </resources>

@@ -3,14 +3,14 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="dark">#ff212121</color>
+    <color name="dark">#212121</color>
     <color name="evenDarker">#ff1a1a1a</color>
     <color name="accent">#ff00BCD4</color>
 
     <color name="toolbarBackgroundColor">@color/evenDarker</color>
     <color name="toolbarUrlBoxColor">#333333</color>
 
-    <color name="icons">#ffffffff</color>
+    <color name="icons">@color/forward_navigation_icon_theme</color>
     <color name="grey_700">#525253</color>
     <color name="grey_900">#08080A</color>
 
@@ -27,6 +27,12 @@
     <color name="fx_mobile_private_icon_color_primary" tools:ignore="UnusedResources">@color/photonLightGrey05</color>
     <!-- Default Screen background, Frontlayer background, App Bar Top, App Bar Bottom, Frontlayer header -->
     <color name="fx_mobile_layer_color_1">@color/grey_700</color>
+
+    <!-- Text -->
+    <!-- Primary text -->
+    <color name="fx_mobile_text_color_primary">@color/photonLightGrey05</color>
+    <!-- Secondary text -->
+    <color name="fx_mobile_text_color_secondary">@color/photonLightGrey40</color>
     <!-- Search -->
     <color name="fx_mobile_layer_color_3">@color/grey_900</color>
 </resources>

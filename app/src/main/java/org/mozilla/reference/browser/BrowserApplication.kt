@@ -6,6 +6,7 @@ package org.mozilla.reference.browser
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -24,6 +25,7 @@ import mozilla.components.support.rusthttp.RustHttpConfig
 import mozilla.components.support.webextensions.WebExtensionSupport
 import org.mozilla.reference.browser.push.PushFxaIntegration
 import org.mozilla.reference.browser.push.WebPushEngineIntegration
+import org.mozilla.reference.browser.settings.Settings
 import java.util.concurrent.TimeUnit
 
 open class BrowserApplication : Application() {
@@ -31,7 +33,10 @@ open class BrowserApplication : Application() {
 
     override fun onCreate() {
         // 跟随系统切换深色/浅色模式
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(
+            Settings.getAppTheme(this)
+        )
+
         super.onCreate()
 
         setupCrashReporting(this)
