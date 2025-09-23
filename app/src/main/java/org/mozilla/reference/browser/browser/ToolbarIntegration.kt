@@ -216,9 +216,9 @@ class ToolbarIntegration(
         toolbar.display.setUrlBackground(
             ResourcesCompat.getDrawable(context.resources, R.drawable.url_background, context.theme),
         )
-        toolbar.display.colors = toolbar.display.colors.copy(
-            text = ResourcesCompat.getColor(context.resources, colorsR.color.photonWhite, context.theme),
-        )
+//        toolbar.display.colors = toolbar.display.colors.copy(
+//            text = ResourcesCompat.getColor(context.resources, colorsR.color.photonWhite, context.theme),
+//        )
 
         ImeInsetsSynchronizer.setup(
             targetView = toolbar,

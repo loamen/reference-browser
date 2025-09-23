@@ -48,6 +48,7 @@ import mozilla.components.support.ktx.android.view.enterImmersiveMode
 import mozilla.components.support.ktx.android.view.exitImmersiveMode
 import mozilla.components.ui.widgets.behavior.EngineViewClippingBehavior
 import mozilla.components.ui.widgets.behavior.EngineViewScrollingBehavior
+import org.mozilla.reference.browser.BrowserActivity
 import org.mozilla.reference.browser.BuildConfig
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.addons.WebExtensionPromptFeature
@@ -58,6 +59,7 @@ import org.mozilla.reference.browser.pip.PictureInPictureIntegration
 import org.mozilla.reference.browser.tabs.LastTabFeature
 import mozilla.components.ui.widgets.behavior.ViewPosition as MozacToolbarBehaviorToolbarPosition
 import org.mozilla.reference.browser.ext.enableDynamicBehavior
+import top.yooho.ui.theme.ThemeManager
 
 private const val BOTTOM_TOOLBAR_HEIGHT = 0
 
@@ -538,4 +540,21 @@ abstract class BaseBrowserFragment :
 
         return activityResultHandler.any { it.onActivityResult(requestCode, data, resultCode) }
     }
+
+    internal lateinit var themeManager: ThemeManager
+    override fun onStart() {
+        super.onStart()
+        // 确保 themeManager 已初始化
+        if (::themeManager.isInitialized) {
+            themeManager.applyTheme(toolbar)
+        } else {
+            // 从 activity 获取 themeManager
+            val activity = activity
+            if (activity is BrowserActivity) {
+                themeManager = activity.themeManager
+                themeManager.applyTheme(toolbar)
+            }
+        }
+    }
+
 }

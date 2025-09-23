@@ -9,4 +9,16 @@
     </declare-styleable>
     !-- Small heading, Text link -->
     <attr name="textAccent" format="reference" />
+
+    <attr name="toolbarBackground" format="reference" />
+    <attr name="toolbarUrlBackground" format="reference" />
+    <!-- Text -->
+    <!-- Primary text -->
+    <attr name="textPrimary" format="reference" />
+    <!-- Secondary text -->
+    <attr name="textSecondary" format="reference" />
+
+    <!-- Layers -->
+    <!-- Default Screen background, Frontlayer background, App Bar Top, App Bar Bottom, Frontlayer header -->
+    <attr name="layer1" format="reference" />
 </resources>

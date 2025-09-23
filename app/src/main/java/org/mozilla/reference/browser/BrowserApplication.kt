@@ -5,6 +5,7 @@
 package org.mozilla.reference.browser
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -29,6 +30,8 @@ open class BrowserApplication : Application() {
     val components by lazy { Components(this) }
 
     override fun onCreate() {
+        // 跟随系统切换深色/浅色模式
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         super.onCreate()
 
         setupCrashReporting(this)

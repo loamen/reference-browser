@@ -34,12 +34,15 @@ import org.mozilla.reference.browser.browser.BrowserFragment
 import org.mozilla.reference.browser.browser.CrashIntegration
 import org.mozilla.reference.browser.ext.components
 import top.yooho.browser.ui.StandbyFragment
+import top.yooho.ui.theme.DefaultThemeManager
+import top.yooho.ui.theme.ThemeManager
 
 /**
  * Activity that holds the [BrowserFragment].
  */
 open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationListener {
     private lateinit var crashIntegration: CrashIntegration
+    lateinit var themeManager: ThemeManager
 
     private val sessionId: String?
         get() = SafeIntent(intent).getStringExtra(EXTRA_SESSION_ID)
@@ -61,6 +64,7 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
+        themeManager = DefaultThemeManager( this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT))
         window.setupPersistentInsets()
@@ -206,7 +210,7 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, createBrowserFragment(sessionId))
             .commit()
-        
+
         // 只有在没有打开任何页面时才加载指定网址，且不在地址栏显示
         if (components.core.store.state.tabs.isEmpty()) {
             // 使用EXTERNAL标志来避免在地址栏显示URL
