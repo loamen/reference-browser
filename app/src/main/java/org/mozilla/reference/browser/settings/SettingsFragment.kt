@@ -42,7 +42,9 @@ import org.mozilla.reference.browser.ext.getPreference
 import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.sync.BrowserFxAEntryPoint
+import top.yooho.browser.config.PrefConst
 import top.yooho.browser.settings.dialogs.LanguageChangeDialog
+import top.yooho.browser.utils.PrefUtil
 import top.yooho.setting.CustomizationSettingsFragment
 import top.yooho.setting.InstalledSearchEnginesSettingsFragment
 import java.util.Locale
@@ -147,6 +149,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         preferenceAboutPage?.onPreferenceClickListener = getAboutPageListener()
         preferencePrivacy?.onPreferenceClickListener = getClickListenerForPrivacy()
         preferenceCustomAddons?.onPreferenceClickListener = getClickListenerForCustomAddons()
+
+        // 移除开发者工具分类（PreferenceCategory）
+        val developerToolsCategory = findPreference<Preference>("developer_tools_category")
+        // 开发者模式状态
+        val isDeveloperMode = PrefUtil.getBoolean(requireContext(), PrefConst.DEVELOPER_MODE_KEY, false)
+        if (developerToolsCategory != null && !isDeveloperMode) {
+            preferenceScreen.removePreference(developerToolsCategory)
+        }
     }
 
     private fun getClickListenerForMakeDefaultBrowser(): OnPreferenceClickListener =

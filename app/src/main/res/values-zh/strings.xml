@@ -69,7 +69,7 @@
 <p>隐私浏览<strong>不会让您在互联网上匿名</strong>。您的雇主或互联网服务提供商仍然可以知道您访问的页面。</p>
 <p class="about-info">了解更多关于<a id="learnMore">隐私浏览</a>的信息。</p>
      ]]></string>
-    <string name="datareporting_notification_title">参考浏览器</string>
+    <string name="datareporting_notification_title">Y浏览器</string>
     <string name="datareporting_notification_summary">为了改善您的体验，参考浏览器会自动向 Yooho 发送一些信息。</string>
     <string name="default_notification_channel">浏览器</string>
     <string name="about_content">%1$s 由 布狐 倾力打造。</string>
@@ -91,8 +91,7 @@
     <string name="toast_customize_addon_collection_done">扩展集合已修改。退出应用以应用更改…</string>
 
 <!--    loamen-->
-    <string name="preferences_change_language">语言</string>
-    <string name="pref_key_change_language" translatable="false">pref_key_change_language</string>
+    <string name="preferences_change_language">显示语言</string>
     <string name="install_add_on_via_file">从文件安装</string>
     <string name="install_add_on_via_url">从URL安装</string>
     <string name="unable_to_open_the_file_chooser">无法打开文件选择器</string>

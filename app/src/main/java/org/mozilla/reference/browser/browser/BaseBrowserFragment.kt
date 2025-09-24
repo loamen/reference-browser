@@ -124,6 +124,9 @@ abstract class BaseBrowserFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //初始化样式
+        themeManager = (activity as BrowserActivity).themeManager
+
         requestDownloadPermissionsLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
                 val permissions = results.keys.toTypedArray()
@@ -545,16 +548,7 @@ abstract class BaseBrowserFragment :
     override fun onStart() {
         super.onStart()
         // 确保 themeManager 已初始化
-        if (::themeManager.isInitialized) {
-            themeManager.applyTheme(toolbar)
-        } else {
-            // 从 activity 获取 themeManager
-            val activity = activity
-            if (activity is BrowserActivity) {
-                themeManager = activity.themeManager
-                themeManager.applyTheme(toolbar)
-            }
-        }
+        themeManager.applyTheme(toolbar)
     }
 
 }

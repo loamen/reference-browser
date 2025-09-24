@@ -142,6 +142,21 @@ class BrowserFragment :
         )
 
         engineView.setDynamicToolbarMaxHeight(resources.getDimensionPixelSize(R.dimen.browser_toolbar_height))
+
+        //首页按钮
+        val homeAction = BrowserToolbar.Button(
+            imageDrawable = ResourcesCompat.getDrawable(
+                resources,
+                mozilla.components.ui.icons.R.drawable.mozac_ic_home_24,
+                null,
+            )!!,
+            contentDescription = requireContext().getString(top.yooho.browser.R.string.browser_toolbar_home),
+            iconTintColorResource = themeManager.getIconColor(),
+            listener = ::onHomeButtonClicked,
+        )
+        if (Settings.shouldShowHomeButton(requireContext())) {
+            toolbar.addNavigationAction(homeAction)
+        }
     }
 
     private fun showTabs() {
@@ -161,26 +176,6 @@ class BrowserFragment :
             arguments = Bundle().apply {
                 putSessionId(sessionId)
             }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        //首页按钮
-        val homeAction = BrowserToolbar.Button(
-            imageDrawable = ResourcesCompat.getDrawable(
-                resources,
-                mozilla.components.ui.icons.R.drawable.mozac_ic_home_24,
-                null
-            )!!,
-            contentDescription = requireContext().getString(top.yooho.browser.R.string.browser_toolbar_home),
-            iconTintColorResource = themeManager.getIconColor(),
-            listener = ::onHomeButtonClicked,
-        )
-
-
-        if (Settings.shouldShowHomeButton(requireContext())) {
-            toolbar.addNavigationAction(homeAction)
         }
     }
 
