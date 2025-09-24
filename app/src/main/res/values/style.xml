@@ -20,6 +20,9 @@
         <item name="textSecondary">@color/fx_mobile_text_color_secondary</item>
         <item name="toolbarBackground">@color/fx_mobile_layer_color_1</item>
         <item name="toolbarUrlBackground">@color/fx_mobile_layer_color_3</item>
+
+        <!-- 自定义 AlertDialog 样式 -->
+        <item name="alertDialogTheme">@style/CustomAlertDialogTheme</item>
     </style>
 
     <style name="AppTheme" parent="Theme.Material3.DayNight">
@@ -39,6 +42,9 @@
         <item name="textSecondary">@color/fx_mobile_text_color_secondary</item>
         <item name="toolbarBackground">@color/fx_mobile_layer_color_1</item>
         <item name="toolbarUrlBackground">@color/fx_mobile_layer_color_3</item>
+
+        <!-- 自定义 AlertDialog 样式 -->
+        <item name="alertDialogTheme">@style/CustomAlertDialogTheme</item>
     </style>
 
     <style name="AddonsActivityTheme" parent="AppTheme">
@@ -55,5 +61,18 @@
         <item name="android:maxLines">1</item>
         <item name="android:minLines">1</item>
         <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- 自定义 AlertDialog 主题 -->
+    <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/fx_mobile_text_color_primary</item>
+        <item name="android:background">@color/fx_mobile_layer_color_1</item>
+        <item name="buttonBarButtonStyle">@style/CustomDialogButtonStyle</item>
+    </style>
+
+    <!-- 自定义 Dialog 按钮样式 -->
+    <style name="CustomDialogButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/alert_dialog_button_color</item>
     </style>
 </resources>

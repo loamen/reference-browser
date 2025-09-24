@@ -17,7 +17,14 @@
     <!-- Primary text -->
     <color name="fx_mobile_text_color_primary">@color/photonDarkGrey90</color>
     <!-- Secondary text -->
-    <color name="fx_mobile_text_color_secondary">@color/photonDarkGrey05</color>r>
+    <color name="fx_mobile_text_color_secondary">@color/photonDarkGrey05</color>
     <!-- Search -->
     <color name="fx_mobile_layer_color_3">#E7E7E7</color>
+
+    <!-- 添加 Toast 和 Dialog 背景颜色 -->
+    <color name="dialog_background">@color/photonWhite</color>
+    <color name="toast_background">@color/photonWhite</color>
+
+    <!-- 为 AlertDialog 按钮添加明确的颜色定义 -->
+    <color name="alert_dialog_button_color">#FF00BCD4</color>
 </resources>

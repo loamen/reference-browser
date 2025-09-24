@@ -36,4 +36,11 @@
     <color name="fx_mobile_text_color_secondary">@color/photonLightGrey40</color>
     <!-- Search -->
     <color name="fx_mobile_layer_color_3">@color/grey_900</color>
+
+    <!-- 添加 Toast 和 Dialog 背景颜色 -->
+    <color name="dialog_background">@color/grey_700</color>
+    <color name="toast_background">@color/grey_700</color>
+
+    <!-- 为 AlertDialog 按钮添加明确的颜色定义 -->
+    <color name="alert_dialog_button_color">#FF00BCD4</color>
 </resources>
