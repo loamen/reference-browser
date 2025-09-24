@@ -85,8 +85,7 @@
         android:layout_gravity="bottom"
         android:orientation="horizontal"
         android:gravity="center"
-        android:background="@color/toolbarBackgroundColor"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior">
+        android:background="@color/toolbarBackgroundColor">
 
         <ImageButton
             android:id="@+id/actionBack"

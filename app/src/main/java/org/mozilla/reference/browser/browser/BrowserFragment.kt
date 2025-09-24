@@ -242,6 +242,10 @@ class BrowserFragment :
                         val canFwd = tab?.content?.canGoForward == true
                         backButton.alpha = if (canBack) 1f else 0.4f
                         forwardButton.alpha = if (canFwd) 1f else 0.4f
+                        
+                        // 同时启用/禁用按钮点击，而不仅仅是改变透明度
+                        backButton.isEnabled = canBack
+                        forwardButton.isEnabled = canFwd
                     }
             }
         }
