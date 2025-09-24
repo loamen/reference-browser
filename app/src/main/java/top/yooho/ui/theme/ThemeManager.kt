@@ -74,7 +74,7 @@ class DefaultThemeManager(
     }
 
     override fun getIconColor(): Int {
-            return R.color.fx_mobile_private_icon_color_primary
+            return R.color.icons
     }
 
     override fun applyStatusBarTheme() {

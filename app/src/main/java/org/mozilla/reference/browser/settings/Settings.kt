@@ -58,4 +58,10 @@ object Settings {
         )
         return themeString!!.toInt()
     }
+
+    //是否限制主页
+    fun shouldShowHomeButton(context: Context): Boolean =
+        PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+            context.getString(top.yooho.browser.R.string.pref_key_show_home_button), true
+        )
 }

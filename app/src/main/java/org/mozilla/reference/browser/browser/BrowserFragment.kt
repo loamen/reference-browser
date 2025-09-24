@@ -6,6 +6,8 @@ package org.mozilla.reference.browser.browser
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import mozilla.components.browser.thumbnails.BrowserThumbnails
@@ -24,6 +26,7 @@ import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.search.AwesomeBarWrapper
+import org.mozilla.reference.browser.settings.Settings
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
 
 /**
@@ -159,5 +162,33 @@ class BrowserFragment :
                 putSessionId(sessionId)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        //首页按钮
+        val homeAction = BrowserToolbar.Button(
+            imageDrawable = ResourcesCompat.getDrawable(
+                resources,
+                mozilla.components.ui.icons.R.drawable.mozac_ic_home_24,
+                null
+            )!!,
+            contentDescription = requireContext().getString(top.yooho.browser.R.string.browser_toolbar_home),
+            iconTintColorResource = themeManager.getIconColor(),
+            listener = ::onHomeButtonClicked,
+        )
+
+
+        if (Settings.shouldShowHomeButton(requireContext())) {
+            toolbar.addNavigationAction(homeAction)
+        }
+    }
+
+    private fun onHomeButtonClicked() {
+        // 使用EXTERNAL标志来避免在地址栏显示URL
+        requireComponents.useCases.sessionUseCases.loadUrl.invoke(
+            getString(top.yooho.browser.R.string.const_nav_url),
+            flags = mozilla.components.concept.engine.EngineSession.LoadUrlFlags.none()
+        )
     }
 }
