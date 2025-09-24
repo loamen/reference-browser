@@ -11,6 +11,7 @@
     <color name="toolbarUrlBoxColor">#333333</color>
 
     <color name="icons">@color/forward_navigation_icon_theme</color>
+    <color name="mozac_ui_icons_fill">@color/forward_navigation_icon_theme</color>
     <color name="grey_700">#525253</color>
     <color name="grey_900">#08080A</color>
 
