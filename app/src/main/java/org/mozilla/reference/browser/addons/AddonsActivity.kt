@@ -13,15 +13,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import mozilla.components.support.ktx.android.view.setupPersistentInsets
 import org.mozilla.reference.browser.R
+import top.yooho.ui.BaseAppCompatActivity
 
 /**
  * An activity to manage add-ons.
  */
-class AddonsActivity : AppCompatActivity() {
+class AddonsActivity : BaseAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT))
+        themeManager.applyStatusBarTheme()
+//        enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT))
         window.setupPersistentInsets(true)
 
 //        setTitle(R.string.add_ons)

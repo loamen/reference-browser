@@ -1,9 +1,13 @@
 package top.yooho.ui.theme
 
-import android.app.Activity
+import androidx.activity.ComponentActivity
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Color
+import android.view.View
 import android.view.Window
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.support.ktx.android.content.getColorFromAttr
@@ -51,7 +55,7 @@ abstract class ThemeManager {
 }
 
 class DefaultThemeManager(
-    private val activity: Activity
+    private val activity: ComponentActivity
 ) : ThemeManager() {
 
     private var currentContext:Context = activity
@@ -78,15 +82,33 @@ class DefaultThemeManager(
     }
 
     override fun applyStatusBarTheme() {
-        when (activity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_NO,
-                -> {
-                updateLightSystemBars(activity.window, currentContext)
-            }
-            Configuration.UI_MODE_NIGHT_UNDEFINED, //we assume dark mode is default
-            Configuration.UI_MODE_NIGHT_YES -> {
-                updateDarkSystemBars(activity.window, currentContext)
-            }
+//        when (activity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+//            Configuration.UI_MODE_NIGHT_NO,
+//                -> {
+//                updateLightSystemBars(activity.window, currentContext)
+//            }
+//            Configuration.UI_MODE_NIGHT_UNDEFINED, //we assume dark mode is default
+//            Configuration.UI_MODE_NIGHT_YES -> {
+//                updateDarkSystemBars(activity.window, currentContext)
+//            }
+//        }
+        // 根据当前主题设置状态栏字体颜色
+        val isLightTheme = when (activity.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_NO -> true // 浅色模式
+            Configuration.UI_MODE_NIGHT_YES -> false // 深色模式
+            else -> true
+        }
+        // 使用 enableEdgeToEdge 设置状态栏样式，替代已废弃的 systemUiVisibility 方法
+        if (isLightTheme) {
+            activity.enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+                navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+            )
+        } else {
+            activity.enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+                navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+            )
         }
     }
 

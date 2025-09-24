@@ -13,14 +13,16 @@ import androidx.appcompat.app.AppCompatActivity
 import mozilla.components.support.base.feature.UserInteractionHandler
 import mozilla.components.support.ktx.android.view.setupPersistentInsets
 import org.mozilla.reference.browser.R
+import top.yooho.ui.BaseAppCompatActivity
 
 class SettingsActivity :
-    AppCompatActivity(),
+    BaseAppCompatActivity(),
     SettingsFragment.ActionBarUpdater {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
-        enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT))
+//        enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT))
         super.onCreate(savedInstanceState)
+        themeManager.applyStatusBarTheme()
         window.setupPersistentInsets(true)
 
         if (savedInstanceState == null) {
