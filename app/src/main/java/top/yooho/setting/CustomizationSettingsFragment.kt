@@ -31,10 +31,7 @@ class CustomizationSettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun setupPreferences() {
-        val toolbarPositionKey = requireContext().getPreferenceKey(R.string.pref_key_toolbar_position)
         val themeKey = requireContext().getPreferenceKey(R.string.pref_key_theme)
-
-        val preferenceToolbarPosition = findPreference<Preference>(toolbarPositionKey)
         val preferenceTheme = findPreference<Preference>(themeKey)
         preferenceTheme?.onPreferenceChangeListener = getChangeListenerForTheme()
     }
