@@ -6,6 +6,9 @@ package org.mozilla.reference.browser.browser
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
@@ -22,11 +25,17 @@ import mozilla.components.feature.tabs.toolbar.TabsToolbarFeature
 import mozilla.components.feature.toolbar.WebExtensionToolbarFeature
 import mozilla.components.support.base.feature.UserInteractionHandler
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import mozilla.components.browser.state.selector.selectedTab
+import mozilla.components.lib.state.ext.flow
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.search.AwesomeBarWrapper
 import org.mozilla.reference.browser.settings.Settings
+import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
 
 /**
@@ -50,6 +59,9 @@ class BrowserFragment :
         get() = requireView().findViewById(R.id.readerViewBar)
     private val readerViewAppearanceButton: FloatingActionButton
         get() = requireView().findViewById(R.id.readerViewAppearanceButton)
+    private lateinit var backButton: android.widget.ImageButton
+    private lateinit var forwardButton: android.widget.ImageButton
+    private lateinit var settingsButton: android.widget.ImageButton
 
     override val shouldUseComposeUI: Boolean
         get() = PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
@@ -143,20 +155,8 @@ class BrowserFragment :
 
         engineView.setDynamicToolbarMaxHeight(resources.getDimensionPixelSize(R.dimen.browser_toolbar_height))
 
-        //首页按钮
-        val homeAction = BrowserToolbar.Button(
-            imageDrawable = ResourcesCompat.getDrawable(
-                resources,
-                mozilla.components.ui.icons.R.drawable.mozac_ic_home_24,
-                null,
-            )!!,
-            contentDescription = requireContext().getString(top.yooho.browser.R.string.browser_toolbar_home),
-            iconTintColorResource = themeManager.getIconColor(),
-            listener = ::onHomeButtonClicked,
-        )
-        if (Settings.shouldShowHomeButton(requireContext())) {
-            toolbar.addNavigationAction(homeAction)
-        }
+        //首页和底部菜单
+        homepageAndBottomMenu()
     }
 
     private fun showTabs() {
@@ -185,5 +185,65 @@ class BrowserFragment :
             getString(top.yooho.browser.R.string.const_nav_url),
             flags = mozilla.components.concept.engine.EngineSession.LoadUrlFlags.none()
         )
+    }
+
+    private fun homepageAndBottomMenu(){
+        //首页按钮
+        val homeAction = BrowserToolbar.Button(
+            imageDrawable = ResourcesCompat.getDrawable(
+                resources,
+                mozilla.components.ui.icons.R.drawable.mozac_ic_home_24,
+                null,
+            )!!,
+            contentDescription = requireContext().getString(top.yooho.browser.R.string.browser_toolbar_home),
+            iconTintColorResource = themeManager.getIconColor(),
+            listener = ::onHomeButtonClicked,
+        )
+        if (Settings.shouldShowHomeButton(requireContext())) {
+            toolbar.addNavigationAction(homeAction)
+        }
+
+        // Bottom bar buttons
+        backButton = requireView().findViewById(R.id.actionBack)
+        forwardButton = requireView().findViewById(R.id.actionForward)
+        settingsButton = requireView().findViewById(R.id.actionSettings)
+
+        // Apply tint to match theme
+        val tint = androidx.core.content.ContextCompat.getColorStateList(requireContext(), themeManager.getIconColor())
+        backButton.imageTintList = tint
+        forwardButton.imageTintList = tint
+        settingsButton.imageTintList = tint
+
+        backButton.setOnClickListener {
+            // Always attempt to go back; engine/store will ignore if not possible
+            requireComponents.useCases.sessionUseCases.goBack.invoke()
+        }
+
+        forwardButton.setOnClickListener {
+            // Always attempt to go forward; engine/store will ignore if not possible
+            requireComponents.useCases.sessionUseCases.goForward.invoke()
+        }
+
+        settingsButton.setOnClickListener {
+            val intent = android.content.Intent(requireContext(), SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Observe tab if we want to reflect navigation availability on UI later
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                requireComponents.core.store
+                    .flow()
+                    .map { state -> state.selectedTab }
+                    .distinctUntilChanged()
+                    .collect { tab ->
+                        // Example: adjust alpha to reflect enabled-state visually
+                        val canBack = tab?.content?.canGoBack == true
+                        val canFwd = tab?.content?.canGoForward == true
+                        backButton.alpha = if (canBack) 1f else 0.4f
+                        forwardButton.alpha = if (canFwd) 1f else 0.4f
+                    }
+            }
+        }
     }
 }

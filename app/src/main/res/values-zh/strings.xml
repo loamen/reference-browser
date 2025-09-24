@@ -43,6 +43,8 @@
     <string name="tracker_category">跟踪保护</string>
     <string name="data_choices_category">数据选择</string>
     <string name="settings">设置</string>
+    <string name="back">后退</string>
+    <string name="forward">前进</string>
 <!--    <string name="add_ons">附加组件</string>-->
     <string name="report_issue">反馈问题</string>
     <string name="find_in_page">在页面中查找</string>
