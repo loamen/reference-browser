@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.core.content.res.ResourcesCompat
-import androidx.navigation.fragment.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import mozilla.components.browser.thumbnails.BrowserThumbnails
@@ -33,12 +32,12 @@ import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.lib.state.ext.flow
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.addons.AddonsActivity
-import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.search.AwesomeBarWrapper
 import org.mozilla.reference.browser.settings.Settings
 import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
+import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
 
 /**
  * Fragment used for browsing the web within the main app.
@@ -247,6 +246,7 @@ class BrowserFragment :
                     startActivity(intent)
                 } else {
                     println("Current URL: $url")
+                    showAddonsSheet()
                 }
             }
         }
@@ -276,5 +276,11 @@ class BrowserFragment :
                     }
             }
         }
+    }
+    
+    private fun showAddonsSheet() {
+        val extensions = requireComponents.core.store.state.extensions.values.toList()
+        val sheet = AddonsSheetDialogFragment.createFrom(extensions)
+        sheet.show(parentFragmentManager, "addons_sheet")
     }
 }
