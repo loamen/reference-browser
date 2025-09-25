@@ -304,6 +304,30 @@ class BrowserFragment :
             }
 
         val sheet = AddonsSheetDialogFragment.createFrom(visibleExtensions)
+        sheet.loadAddonIcon = lambda@ { addonId, heightPx, onLoaded ->
+            val ext = visibleExtensions.firstOrNull { it.id == addonId }
+            if (ext == null) {
+                onLoaded(null)
+                return@lambda
+            }
+            val tabExtState = tab?.extensionState?.get(addonId)
+            val action = ext.browserAction?.copyWithOverride(tabExtState?.browserAction)
+                ?: ext.pageAction?.copyWithOverride(tabExtState?.pageAction)
+            val loadIcon = action?.loadIcon
+            if (loadIcon == null) {
+                onLoaded(null)
+            } else {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val bitmap = loadIcon.invoke(heightPx)
+                        val drawable = bitmap?.let { android.graphics.drawable.BitmapDrawable(resources, it) }
+                        onLoaded(drawable)
+                    } catch (_: Throwable) {
+                        onLoaded(null)
+                    }
+                }
+            }
+        }
         sheet.onAddonSelected = { addonId ->
             // Mirror AC's behavior: prefer invoking the extension's action; fallback to details
             val tab = requireComponents.core.store.state.selectedTab
