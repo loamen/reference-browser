@@ -294,7 +294,7 @@ class BrowserFragment :
         val visibleExtensions: MutableList<WebExtensionState> = mutableListOf()
 
         extensions
-            .filter { it.enabled && !it.isBuiltIn }
+            .filter { it.enabled }
             .filterNot { !it.allowedInPrivateBrowsing && tab?.content?.private == true }
             .sortedBy { it.name }
             .forEach { extension ->
