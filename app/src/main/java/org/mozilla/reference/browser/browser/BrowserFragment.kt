@@ -29,6 +29,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import mozilla.components.browser.state.selector.selectedTab
+import mozilla.components.browser.state.state.WebExtensionState
+import mozilla.components.feature.addons.menu.createMenuCandidate
 import mozilla.components.lib.state.ext.flow
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.addons.AddonsActivity
@@ -175,21 +177,21 @@ class BrowserFragment :
     companion object {
         fun create(sessionId: String? = null) =
             BrowserFragment().apply {
-            arguments = Bundle().apply {
-                putSessionId(sessionId)
+                arguments = Bundle().apply {
+                    putSessionId(sessionId)
+                }
             }
-        }
     }
 
     private fun onHomeButtonClicked() {
         // 使用EXTERNAL标志来避免在地址栏显示URL
         requireComponents.useCases.sessionUseCases.loadUrl.invoke(
             getString(top.yooho.browser.R.string.const_nav_url),
-            flags = mozilla.components.concept.engine.EngineSession.LoadUrlFlags.none()
+            flags = mozilla.components.concept.engine.EngineSession.LoadUrlFlags.none(),
         )
     }
 
-    private fun homepageAndBottomMenu(){
+    private fun homepageAndBottomMenu() {
         //首页按钮
         val homeAction = BrowserToolbar.Button(
             imageDrawable = ResourcesCompat.getDrawable(
@@ -241,7 +243,8 @@ class BrowserFragment :
 
                 // 如果网址为homepage，则跳转到AddonsActivity
                 if (url.contains(getString(top.yooho.browser.R.string.const_nav_url))
-                    || !url.startsWith("http")) {
+                    || !url.startsWith("http")
+                ) {
                     val intent = android.content.Intent(requireContext(), AddonsActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -269,7 +272,7 @@ class BrowserFragment :
                         val canFwd = tab?.content?.canGoForward == true
                         backButton.alpha = if (canBack) 1f else 0.4f
                         forwardButton.alpha = if (canFwd) 1f else 0.4f
-                        
+
                         // 同时启用/禁用按钮点击，而不仅仅是改变透明度
                         backButton.isEnabled = canBack
                         forwardButton.isEnabled = canFwd
@@ -277,10 +280,30 @@ class BrowserFragment :
             }
         }
     }
-    
+
     private fun showAddonsSheet() {
-        val extensions = requireComponents.core.store.state.extensions.values.toList()
-        val sheet = AddonsSheetDialogFragment.createFrom(extensions)
+        val state = requireComponents.core.store.state
+        val tab = state.selectedTab
+        val extensions = state.extensions.values.toList()
+
+        // Align filtering with WebExtensionNestedMenuCandidate from AC:
+        // - Only enabled extensions
+        // - If current tab is private, exclude extensions that are not allowed in private browsing
+        // - Sort by name
+        val visibleExtensions: MutableList<WebExtensionState> = mutableListOf()
+
+        extensions
+            .filter { it.enabled && !it.isBuiltIn }
+            .filterNot { !it.allowedInPrivateBrowsing && tab?.content?.private == true }
+            .sortedBy { it.name }
+            .forEach { extension ->
+                val tabExtensionState = tab?.extensionState?.get(extension.id)
+                if (tabExtensionState != null) {
+                    visibleExtensions.add(extension)
+                }
+            }
+
+        val sheet = AddonsSheetDialogFragment.createFrom(visibleExtensions)
         sheet.show(parentFragmentManager, "addons_sheet")
     }
 }
