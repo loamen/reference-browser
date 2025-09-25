@@ -174,7 +174,14 @@ class ToolbarIntegration(
         val tint = ContextCompat.getColor(context, R.color.icons)
 
         return sessionMenuItems + listOf(
-            TextMenuCandidate(text = context.getString(mozilla.components.feature.addons.R.string.mozac_feature_addons_addons)) {
+            TextMenuCandidate(
+                text = context.getString(mozilla.components.feature.addons.R.string.mozac_feature_addons_addons),
+                start = DrawableMenuIcon (
+                    context,
+                    mozilla.components.ui.icons.R.drawable.mozac_ic_extension_24,
+                    tint = tint
+                ),
+                ) {
                 val intent = Intent(context, AddonsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
