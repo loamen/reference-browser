@@ -4,6 +4,7 @@
 
 package org.mozilla.reference.browser.browser
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -304,7 +305,7 @@ class BrowserFragment :
             }
 
         val sheet = AddonsSheetDialogFragment.createFrom(visibleExtensions)
-        sheet.loadAddonIcon = lambda@ { addonId, heightPx, onLoaded ->
+        sheet.loadAddonIcon = lambda@{ addonId, heightPx, onLoaded ->
             val ext = visibleExtensions.firstOrNull { it.id == addonId }
             if (ext == null) {
                 onLoaded(null)
@@ -331,23 +332,33 @@ class BrowserFragment :
         sheet.onAddonSelected = { addonId ->
             // Mirror AC's behavior: prefer invoking the extension's action; fallback to details
             val tab = requireComponents.core.store.state.selectedTab
-            val ext = visibleExtensions.firstOrNull { it.id == addonId }
-            if (ext != null) {
-                val tabExtensionState = tab?.extensionState?.get(addonId)
-                val browserAction = ext.browserAction?.copyWithOverride(tabExtensionState?.browserAction)
-                val pageAction = ext.pageAction?.copyWithOverride(tabExtensionState?.pageAction)
-                when {
-                    browserAction != null -> browserAction.onClick()
-                    pageAction != null -> pageAction.onClick()
-                    else -> {
-                        val intent = android.content.Intent().apply {
-                            setClassName(requireContext().packageName, "${requireContext().packageName}.addons.InstalledAddonDetailsActivity")
-                            putExtra("EXTRA_ADDON_ID", addonId)
-                            putExtra("addonId", addonId)
-                        }
-                        try {
-                            startActivity(intent)
-                        } catch (_: Throwable) {
+            if (addonId == "builtin://addons_manager") {
+                val intent = Intent(requireContext(), AddonsActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                requireContext().startActivity(intent)
+
+            } else {
+                val ext = visibleExtensions.firstOrNull { it.id == addonId }
+                if (ext != null) {
+                    val tabExtensionState = tab?.extensionState?.get(addonId)
+                    val browserAction = ext.browserAction?.copyWithOverride(tabExtensionState?.browserAction)
+                    val pageAction = ext.pageAction?.copyWithOverride(tabExtensionState?.pageAction)
+                    when {
+                        browserAction != null -> browserAction.onClick()
+                        pageAction != null -> pageAction.onClick()
+                        else -> {
+                            val intent = android.content.Intent().apply {
+                                setClassName(
+                                    requireContext().packageName,
+                                    "${requireContext().packageName}.addons.InstalledAddonDetailsActivity",
+                                )
+                                putExtra("EXTRA_ADDON_ID", addonId)
+                                putExtra("addonId", addonId)
+                            }
+                            try {
+                                startActivity(intent)
+                            } catch (_: Throwable) {
+                            }
                         }
                     }
                 }
