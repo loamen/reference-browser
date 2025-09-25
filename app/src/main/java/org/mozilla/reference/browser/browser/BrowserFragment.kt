@@ -6,6 +6,7 @@ package org.mozilla.reference.browser.browser
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -31,6 +32,7 @@ import kotlinx.coroutines.flow.map
 import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.lib.state.ext.flow
 import org.mozilla.reference.browser.R
+import org.mozilla.reference.browser.addons.AddonsActivity
 import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.search.AwesomeBarWrapper
@@ -59,9 +61,10 @@ class BrowserFragment :
         get() = requireView().findViewById(R.id.readerViewBar)
     private val readerViewAppearanceButton: FloatingActionButton
         get() = requireView().findViewById(R.id.readerViewAppearanceButton)
-    private lateinit var backButton: android.widget.ImageButton
-    private lateinit var forwardButton: android.widget.ImageButton
-    private lateinit var settingsButton: android.widget.ImageButton
+    private lateinit var backButton: ImageButton
+    private lateinit var forwardButton: ImageButton
+    private lateinit var settingsButton: ImageButton
+    private lateinit var addonButton: ImageButton
 
     override val shouldUseComposeUI: Boolean
         get() = PreferenceManager.getDefaultSharedPreferences(requireContext()).getBoolean(
@@ -207,12 +210,14 @@ class BrowserFragment :
         backButton = requireView().findViewById(R.id.actionBack)
         forwardButton = requireView().findViewById(R.id.actionForward)
         settingsButton = requireView().findViewById(R.id.actionSettings)
+        addonButton = requireView().findViewById(R.id.actionAddons)
 
         // Apply tint to match theme
         val tint = androidx.core.content.ContextCompat.getColorStateList(requireContext(), themeManager.getIconColor())
         backButton.imageTintList = tint
         forwardButton.imageTintList = tint
         settingsButton.imageTintList = tint
+        addonButton.imageTintList = tint
 
         backButton.setOnClickListener {
             // Always attempt to go back; engine/store will ignore if not possible
@@ -222,6 +227,28 @@ class BrowserFragment :
         forwardButton.setOnClickListener {
             // Always attempt to go forward; engine/store will ignore if not possible
             requireComponents.useCases.sessionUseCases.goForward.invoke()
+        }
+
+        addonButton.setOnClickListener {
+            val selectedTab = requireComponents.core.store.state.selectedTab
+
+            if (selectedTab == null) {
+                // 没有打开网页，直接跳转到AddonsActivity
+                val intent = android.content.Intent(requireContext(), AddonsActivity::class.java)
+                startActivity(intent)
+            } else {
+                // 有打开网页，打印网址日志
+                val url = selectedTab.content.url
+
+                // 如果网址为homepage，则跳转到AddonsActivity
+                if (url.contains(getString(top.yooho.browser.R.string.const_nav_url))
+                    || !url.startsWith("http")) {
+                    val intent = android.content.Intent(requireContext(), AddonsActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    println("Current URL: $url")
+                }
+            }
         }
 
         settingsButton.setOnClickListener {

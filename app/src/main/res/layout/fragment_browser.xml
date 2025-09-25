@@ -106,6 +106,15 @@
             android:src="@drawable/mozac_ic_forward_24" />
 
         <ImageButton
+            android:id="@+id/actionAddons"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/mozac_feature_addons_addons"
+            android:src="@drawable/mozac_ic_extension_24" />
+
+        <ImageButton
             android:id="@+id/actionSettings"
             android:layout_width="0dp"
             android:layout_height="match_parent"
