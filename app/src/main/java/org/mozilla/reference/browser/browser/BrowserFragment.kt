@@ -42,13 +42,15 @@ import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
 import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment
+import top.yooho.browser.ui.settings.SettingsSheetDialogFragment.SettingsSheetListener
 
 /**
  * Fragment used for browsing the web within the main app.
  */
 class BrowserFragment :
     BaseBrowserFragment(),
-    UserInteractionHandler {
+    UserInteractionHandler,
+    SettingsSheetListener {
     private val thumbnailsFeature = ViewBoundFeatureWrapper<BrowserThumbnails>()
     private val readerViewFeature = ViewBoundFeatureWrapper<ReaderViewIntegration>()
     private val webExtToolbarFeature = ViewBoundFeatureWrapper<WebExtensionToolbarFeature>()
@@ -369,6 +371,58 @@ class BrowserFragment :
 
     private fun showSettingsSheet() {
         val sheet = SettingsSheetDialogFragment.create()
+        // 设置目标fragment，确保监听器能正确工作
+//        sheet.setTargetFragment(this, 0)
         sheet.show(parentFragmentManager, "settings_sheet")
+    }
+
+    /**
+     * 处理设置项点击事件
+     */
+    override fun onSettingsItemClicked(itemId: Int) {
+        // 这里根据不同的设置项ID执行相应的操作
+        when (itemId) {
+            top.yooho.browser.R.id.bookmarkItem -> {
+                // 处理书签点击事件
+                // 需要在浏览器中添加书签功能
+                val selectedTab = requireComponents.core.store.state.selectedTab
+                if (selectedTab != null) {
+//                    requireComponents.useCases.bookmarkUseCases.addBookmark("", selectedTab.content.title, selectedTab.content.url)
+                }
+            }
+            top.yooho.browser.R.id.historyItem -> {
+                // 处理历史点击事件
+                // 可以导航到历史页面
+                // startActivity(Intent(requireContext(), HistoryActivity::class.java))
+            }
+            top.yooho.browser.R.id.nightModeItem -> {
+                // 处理夜间模式点击事件
+                // 可以切换应用的夜间模式
+                // themeManager.toggleNightMode()
+            }
+            // 可以继续添加其他设置项的处理逻辑
+            else -> {
+                // 默认处理
+                println("Settings item clicked: $itemId")
+            }
+        }
+    }
+
+    /**
+     * 处理用户个人资料点击事件
+     */
+    override fun onUserProfileClicked() {
+        // 处理用户图标和名称点击事件
+        // 可以导航到用户中心或账户页面
+        // startActivity(Intent(requireContext(), AccountActivity::class.java))
+    }
+
+    /**
+     * 处理设置按钮点击事件
+     */
+    override fun onSettingsButtonClicked() {
+        // 处理设置按钮点击事件
+        // 导航到完整的设置页面
+        startActivity(Intent(requireContext(), SettingsActivity::class.java))
     }
 }
