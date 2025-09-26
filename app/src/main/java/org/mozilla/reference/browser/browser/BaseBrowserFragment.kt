@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -99,6 +100,8 @@ abstract class BaseBrowserFragment :
         get() = requireView().findViewById(R.id.findInPageBar)
     private val swipeRefresh: SwipeRefreshLayout
         get() = requireView().findViewById(R.id.swipeRefresh)
+    private val bottomBar: LinearLayout
+        get() = requireView().findViewById(R.id.bottomBar)
 
     private val backButtonHandler: List<ViewBoundFeatureWrapper<*>> = listOf(
         fullScreenFeature,
@@ -217,7 +220,7 @@ abstract class BaseBrowserFragment :
             requireContext(),
             swipeRefresh,
             engineView,
-            true
+            true,
         )
 
         toolbarIntegration.set(
@@ -467,11 +470,13 @@ abstract class BaseBrowserFragment :
             engineView.setDynamicToolbarMaxHeight(0)
             // Without this, fullscreen has a margin at the top.
             engineView.setVerticalClipping(0)
+            bottomBar.visibility = View.GONE
         } else {
             activity?.exitImmersiveMode()
             toolbar.visibility = View.VISIBLE
             toolbar.expand()
             engineView.setDynamicToolbarMaxHeight(resources.getDimensionPixelSize(R.dimen.browser_toolbar_height))
+            bottomBar.visibility = View.VISIBLE
         }
     }
 
