@@ -43,6 +43,7 @@ import org.mozilla.reference.browser.tabs.TabsTrayFragment
 import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment.SettingsSheetListener
+import top.yooho.browser.R as browserR
 
 /**
  * Fragment used for browsing the web within the main app.
@@ -379,31 +380,27 @@ class BrowserFragment :
     /**
      * 处理设置项点击事件
      */
-    override fun onSettingsItemClicked(itemId: Int) {
-        // 这里根据不同的设置项ID执行相应的操作
-        when (itemId) {
-            top.yooho.browser.R.id.bookmarkItem -> {
-                // 处理书签点击事件
-                // 需要在浏览器中添加书签功能
-                val selectedTab = requireComponents.core.store.state.selectedTab
-                if (selectedTab != null) {
-//                    requireComponents.useCases.bookmarkUseCases.addBookmark("", selectedTab.content.title, selectedTab.content.url)
-                }
+    override fun onSettingsItemClicked(title: String) {
+        // 这里根据不同的设置项标题执行相应的操作
+        when (title) {
+            getString(browserR.string.share) -> {
+
             }
-            top.yooho.browser.R.id.historyItem -> {
-                // 处理历史点击事件
-                // 可以导航到历史页面
-                // startActivity(Intent(requireContext(), HistoryActivity::class.java))
-            }
-            top.yooho.browser.R.id.nightModeItem -> {
+            getString(browserR.string.dark_mode) -> {
                 // 处理夜间模式点击事件
+            }
+            getString(browserR.string.request_desktop_site) -> {
+                // 请求桌面版
                 // 可以切换应用的夜间模式
                 // themeManager.toggleNightMode()
+            }
+            getString(browserR.string.private_mode) -> {
+
             }
             // 可以继续添加其他设置项的处理逻辑
             else -> {
                 // 默认处理
-                println("Settings item clicked: $itemId")
+                println("Settings item clicked: $title")
             }
         }
     }
