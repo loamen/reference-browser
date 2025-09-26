@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -371,10 +372,10 @@ class BrowserFragment :
     }
 
     private fun showSettingsSheet() {
-        val sheet = SettingsSheetDialogFragment.create()
-        // 设置目标fragment，确保监听器能正确工作
-//        sheet.setTargetFragment(this, 0)
-        sheet.show(parentFragmentManager, "settings_sheet")
+        settingsSheet = SettingsSheetDialogFragment.create()
+        // 设置监听器以处理设置项点击事件
+        settingsSheet?.setSettingsSheetListener(this)
+        settingsSheet?.show(parentFragmentManager, "settings_sheet")
     }
 
     /**
@@ -405,13 +406,23 @@ class BrowserFragment :
         }
     }
 
+    // 保存SettingsSheetDialogFragment的引用
+    private var settingsSheet: SettingsSheetDialogFragment? = null
+
     /**
      * 处理用户个人资料点击事件
      */
     override fun onUserProfileClicked() {
         // 处理用户图标和名称点击事件
-        // 可以导航到用户中心或账户页面
-        // startActivity(Intent(requireContext(), AccountActivity::class.java))
+        Toast.makeText(context, "User profile clicked", Toast.LENGTH_SHORT).show()
+        
+        // 修改userIcon和userName的值
+        settingsSheet?.apply {
+            // 这里可以根据实际需求修改图标和名称
+            userName.text = "已登录用户"
+            // 示例：更改图标颜色或图片
+            userIcon.setColorFilter(androidx.core.content.ContextCompat.getColor(userIcon.context, android.R.color.holo_blue_light))
+        }
     }
 
     /**
@@ -419,7 +430,8 @@ class BrowserFragment :
      */
     override fun onSettingsButtonClicked() {
         // 处理设置按钮点击事件
-        // 导航到完整的设置页面
-        startActivity(Intent(requireContext(), SettingsActivity::class.java))
+        val intent = Intent(context, SettingsActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context?.startActivity(intent)
     }
 }
