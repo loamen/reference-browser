@@ -48,6 +48,8 @@ import org.mozilla.reference.browser.ext.components
 import org.mozilla.reference.browser.ext.share
 import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.synced.SyncedTabsActivity
+import top.yooho.browser.config.PrefConst
+import top.yooho.browser.utils.PrefUtil
 import mozilla.components.ui.colors.R as colorsR
 
 @Suppress("LongParameterList")
@@ -173,19 +175,39 @@ class ToolbarIntegration(
 
         val tint = ContextCompat.getColor(context, R.color.icons)
 
-        return sessionMenuItems + listOf(
+        // 开发者模式状态
+        val isDeveloperMode = PrefUtil.getBoolean(context, PrefConst.DEVELOPER_MODE_KEY, false)
+
+        val addonItem = if (isDeveloperMode) {
+            // 使用正确的调用方式，从store获取BrowserState来创建WebExtension菜单项
+            // TODO会闪退
+            store.state.createWebExtensionMenuCandidate(
+                context,
+                tabId =  store.state.selectedTabId,
+                appendExtensionSubMenuAt = Side.END,
+                onAddonsManagerTapped = {
+                    val intent = Intent(context, AddonsActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(intent)
+                },
+            )
+        } else {
             TextMenuCandidate(
                 text = context.getString(mozilla.components.feature.addons.R.string.mozac_feature_addons_addons),
-                start = DrawableMenuIcon (
+                start = DrawableMenuIcon(
                     context,
                     mozilla.components.ui.icons.R.drawable.mozac_ic_extension_24,
                     tint = tint
                 ),
-                ) {
+            ) {
                 val intent = Intent(context, AddonsActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
-            },
+            }
+        }
+
+        return sessionMenuItems + listOf(
+            addonItem,
 //            TextMenuCandidate(text = context.getString(R.string.synced_tabs)) {
 //                val intent = Intent(context, SyncedTabsActivity::class.java)
 //                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
