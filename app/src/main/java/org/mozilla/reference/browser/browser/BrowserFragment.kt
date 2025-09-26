@@ -298,8 +298,8 @@ class BrowserFragment :
             .filterNot { !it.allowedInPrivateBrowsing && tab?.content?.private == true }
             .sortedBy { it.name }
             .forEach { extension ->
-                val tabExtensionState = tab?.extensionState?.get(extension.id)
-                if (tabExtensionState != null) {
+//                val tabExtensionState = tab?.extensionState?.get(extension.id)
+                if (!extension.isBuiltIn) {
                     visibleExtensions.add(extension)
                 }
             }
