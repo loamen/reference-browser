@@ -41,6 +41,7 @@ import org.mozilla.reference.browser.settings.Settings
 import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
 import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
+import top.yooho.browser.ui.settings.SettingsSheetDialogFragment
 
 /**
  * Fragment used for browsing the web within the main app.
@@ -256,8 +257,7 @@ class BrowserFragment :
         }
 
         settingsButton.setOnClickListener {
-            val intent = android.content.Intent(requireContext(), SettingsActivity::class.java)
-            startActivity(intent)
+            showSettingsSheet()
         }
 
         // Observe tab if we want to reflect navigation availability on UI later
@@ -365,5 +365,10 @@ class BrowserFragment :
             }
         }
         sheet.show(parentFragmentManager, "addons_sheet")
+    }
+
+    private fun showSettingsSheet() {
+        val sheet = SettingsSheetDialogFragment.create()
+        sheet.show(parentFragmentManager, "settings_sheet")
     }
 }
