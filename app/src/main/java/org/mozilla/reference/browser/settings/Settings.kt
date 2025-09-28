@@ -52,16 +52,28 @@ object Settings {
         getOverrideAmoUser(context).isNotEmpty() && getOverrideAmoCollection(context).isNotEmpty()
 
     //loamen 主题
-    fun getAppTheme(context: Context) : Int {
+    fun getAppTheme(context: Context): Int {
         val themeString = PreferenceManager.getDefaultSharedPreferences(context).getString(
-            context.getString(top.yooho.browser.R.string.pref_key_theme), context.getString(top.yooho.browser.R.string.preferences_theme_default)
+            context.getString(top.yooho.browser.R.string.pref_key_theme),
+            context.getString(top.yooho.browser.R.string.preferences_theme_default),
         )
         return themeString!!.toInt()
     }
 
+    fun setAppTheme(context: Context, mode: Int) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit {
+            putString(
+                context.getString(top.yooho.browser.R.string.pref_key_theme),
+                mode.toString(),
+            )
+        }
+    }
+
+    private fun putString(p0: String, p1: Int) {}
+
     //是否限制主页
     fun shouldShowHomeButton(context: Context): Boolean =
         PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-            context.getString(top.yooho.browser.R.string.pref_key_show_home_button), true
+            context.getString(top.yooho.browser.R.string.pref_key_show_home_button), true,
         )
 }

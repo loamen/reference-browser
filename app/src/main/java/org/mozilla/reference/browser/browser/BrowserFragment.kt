@@ -6,9 +6,11 @@ package org.mozilla.reference.browser.browser
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -36,6 +38,7 @@ import mozilla.components.lib.state.ext.flow
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.addons.AddonsActivity
 import org.mozilla.reference.browser.ext.requireComponents
+import org.mozilla.reference.browser.ext.share
 import org.mozilla.reference.browser.search.AwesomeBarWrapper
 import org.mozilla.reference.browser.settings.Settings
 import org.mozilla.reference.browser.settings.SettingsActivity
@@ -378,16 +381,37 @@ class BrowserFragment :
         // 这里根据不同的设置项标题执行相应的操作
         when (title) {
             getString(browserR.string.share) -> {
+                // 处理分享点击事件
+                val selectedTab = requireComponents.core.store.state.selectedTab
+                val url = selectedTab?.content?.url
+                url?.isEmpty()?.let {
+                    if (!it) {
+                        requireContext().share(url)
+                    }
+                }
             }
 
             getString(browserR.string.dark_mode) -> {
                 // 处理夜间模式点击事件
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    Settings.setAppTheme(requireContext(), AppCompatDelegate.MODE_NIGHT_NO)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    Settings.setAppTheme(requireContext(), AppCompatDelegate.MODE_NIGHT_YES)
+                }
             }
 
             getString(browserR.string.request_desktop_site) -> {
                 // 请求桌面版
                 // 可以切换应用的夜间模式
                 // themeManager.toggleNightMode()
+                val isChecked = requireComponents.core.store.state.selectedTab?.content?.desktopMode ?: false
+                if (!isChecked) {
+                    requireComponents.useCases.sessionUseCases.requestDesktopSite.invoke(true)
+                } else {
+                    requireComponents.useCases.sessionUseCases.requestDesktopSite.invoke(false)
+                }
             }
 
             getString(browserR.string.private_mode) -> {
@@ -454,18 +478,22 @@ class BrowserFragment :
      * 获取初始设置项列表
      */
     private fun getInitialSettingsItems(): List<SettingItem> {
+        val selectedTab = requireComponents.core.store.state.selectedTab
         return listOf(
             SettingItem(
                 title = getString(browserR.string.share),
                 iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_share_android_24,
+                isEnabled = !TextUtils.isEmpty(selectedTab?.content?.url),
             ),
             SettingItem(
                 title = getString(browserR.string.dark_mode),
                 iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_night_mode_24,
+                isSelected = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES,
             ),
             SettingItem(
                 title = getString(browserR.string.request_desktop_site),
                 iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_device_desktop_24,
+                isSelected = requireComponents.core.store.state.selectedTab?.content?.desktopMode ?: false,
             ),
             SettingItem(
                 title = getString(browserR.string.private_mode),

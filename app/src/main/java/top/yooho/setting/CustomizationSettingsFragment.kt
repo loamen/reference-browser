@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.core.graphics.drawable.toDrawable
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.settings.SettingsFragment
 import top.yooho.browser.R
@@ -51,6 +53,13 @@ class CustomizationSettingsFragment : PreferenceFragmentCompat() {
                     engine.settings.preferredColorScheme = getPreferredColorScheme()
                 }
                  */
+                //存储
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).edit {
+                    putString(
+                        requireContext().getString(R.string.pref_key_theme),
+                        mode.toString(),
+                    )
+                }
             }
             true
         }
