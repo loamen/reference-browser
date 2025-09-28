@@ -415,7 +415,10 @@ class BrowserFragment :
             }
 
             getString(browserR.string.private_mode) -> {
-
+                // 打开一个新的隐私模式标签页
+                requireComponents.useCases.tabsUseCases.addTab.invoke(
+                    url = "about:privatebrowsing",
+                    private = true)
             }
             // 可以继续添加其他设置项的处理逻辑
             else -> {
@@ -494,6 +497,7 @@ class BrowserFragment :
                 title = getString(browserR.string.request_desktop_site),
                 iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_device_desktop_24,
                 isSelected = requireComponents.core.store.state.selectedTab?.content?.desktopMode ?: false,
+                isEnabled = !TextUtils.isEmpty(selectedTab?.content?.url),
             ),
             SettingItem(
                 title = getString(browserR.string.private_mode),

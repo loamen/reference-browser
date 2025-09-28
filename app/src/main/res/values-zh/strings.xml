@@ -49,7 +49,7 @@
     <string name="report_issue">反馈问题</string>
     <string name="find_in_page">在页面中查找</string>
     <string name="share">分享</string>
-    <string name="request_desktop_site">桌面版网站</string>
+    <string name="request_desktop_site">桌面模式</string>
     <string name="add_to_homescreen">添加到首屏</string>
     <string name="synced_tabs">同步标签</string>
     <string name="account_settings">账户设置</string>
