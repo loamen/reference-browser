@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.state.WebExtensionState
-import mozilla.components.feature.addons.menu.createMenuCandidate
 import mozilla.components.lib.state.ext.flow
 import org.mozilla.reference.browser.R
 import org.mozilla.reference.browser.addons.AddonsActivity
@@ -41,8 +40,8 @@ import org.mozilla.reference.browser.search.AwesomeBarWrapper
 import org.mozilla.reference.browser.settings.Settings
 import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
+import top.yooho.browser.entity.SettingItem
 import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
-import top.yooho.browser.ui.settings.SettingItem
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment.SettingsSheetListener
 import top.yooho.browser.R as browserR
@@ -370,8 +369,6 @@ class BrowserFragment :
             }
         }
         sheet.show(parentFragmentManager, "addons_sheet")
-
-        updateSettingItemState(getString(browserR.string.share), isEnabled = true, isSelected = true)
     }
 
     /**
@@ -406,25 +403,6 @@ class BrowserFragment :
 
     // 保存SettingsSheetDialogFragment的引用
     private var settingsSheet: SettingsSheetDialogFragment? = null
-
-    // 保存当前设置项列表
-    private var currentSettingsItems: List<SettingItem> = emptyList()
-
-    /**
-     * 通用方法，根据状态更新设置项的颜色
-     * @param title 设置项标题
-     * @param isEnabled 是否启用
-     * @param isSelected 是否选中
-     */
-    private fun updateSettingItemState(title: String, isEnabled: Boolean? = null, isSelected: Boolean? = null) {
-        // 更新当前设置项列表
-        currentSettingsItems = SettingsSheetDialogFragment.updateItemState(
-            currentSettingsItems, title, isEnabled, isSelected,
-        )
-
-        // 如果设置对话框已显示，则通知其更新UI
-        // 注意：由于对话框内部实现限制，我们可能需要重新创建适配器
-    }
 
     /**
      * 处理用户个人资料点击事件
@@ -461,16 +439,14 @@ class BrowserFragment :
      * 当设置项需要更新时调用
      */
     override fun onUpdateSettingsItems(items: List<SettingItem>) {
-        currentSettingsItems = items
+
     }
 
     private fun showSettingsSheet() {
-        settingsSheet = SettingsSheetDialogFragment.create()
+        // 初始化当前设置项列表
+        settingsSheet = SettingsSheetDialogFragment.create(getInitialSettingsItems())
         // 设置监听器以处理设置项点击事件
         settingsSheet?.setSettingsSheetListener(this)
-
-        // 初始化当前设置项列表
-        currentSettingsItems = getInitialSettingsItems()
         settingsSheet?.show(parentFragmentManager, "settings_sheet")
     }
 
