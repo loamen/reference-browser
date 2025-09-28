@@ -3,7 +3,7 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
     <string name="app_name">Yooho Browser</string>
-    <string name="organization_name">Abuhu</string>
+    <string name="organization_name">Abuhu Studio</string>
     <!-- Text shown in the toolbar if it is empty -->
     <string name="toolbar_hint">Search or enter address</string>
 
@@ -171,7 +171,7 @@
     <string name="default_notification_channel">Browser</string>
 
     <!-- About content -->
-    <string name="about_content">%1$s is produced by Abuhu.</string>
+    <string name="about_content">%1$s is produced by Abuhu Studio.</string>
 
     <string name="menu_share_with">Share with…</string>
     <string name="toast_copied">Copied!</string>
