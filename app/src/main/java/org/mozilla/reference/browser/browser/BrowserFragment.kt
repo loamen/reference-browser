@@ -42,6 +42,7 @@ import org.mozilla.reference.browser.settings.Settings
 import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
 import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
+import top.yooho.browser.ui.settings.SettingItem
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment.SettingsSheetListener
 import top.yooho.browser.R as browserR
@@ -369,13 +370,8 @@ class BrowserFragment :
             }
         }
         sheet.show(parentFragmentManager, "addons_sheet")
-    }
 
-    private fun showSettingsSheet() {
-        settingsSheet = SettingsSheetDialogFragment.create()
-        // 设置监听器以处理设置项点击事件
-        settingsSheet?.setSettingsSheetListener(this)
-        settingsSheet?.show(parentFragmentManager, "settings_sheet")
+        updateSettingItemState(getString(browserR.string.share), isEnabled = true, isSelected = true)
     }
 
     /**
@@ -385,16 +381,18 @@ class BrowserFragment :
         // 这里根据不同的设置项标题执行相应的操作
         when (title) {
             getString(browserR.string.share) -> {
-
             }
+
             getString(browserR.string.dark_mode) -> {
                 // 处理夜间模式点击事件
             }
+
             getString(browserR.string.request_desktop_site) -> {
                 // 请求桌面版
                 // 可以切换应用的夜间模式
                 // themeManager.toggleNightMode()
             }
+
             getString(browserR.string.private_mode) -> {
 
             }
@@ -409,19 +407,43 @@ class BrowserFragment :
     // 保存SettingsSheetDialogFragment的引用
     private var settingsSheet: SettingsSheetDialogFragment? = null
 
+    // 保存当前设置项列表
+    private var currentSettingsItems: List<SettingItem> = emptyList()
+
+    /**
+     * 通用方法，根据状态更新设置项的颜色
+     * @param title 设置项标题
+     * @param isEnabled 是否启用
+     * @param isSelected 是否选中
+     */
+    private fun updateSettingItemState(title: String, isEnabled: Boolean? = null, isSelected: Boolean? = null) {
+        // 更新当前设置项列表
+        currentSettingsItems = SettingsSheetDialogFragment.updateItemState(
+            currentSettingsItems, title, isEnabled, isSelected,
+        )
+
+        // 如果设置对话框已显示，则通知其更新UI
+        // 注意：由于对话框内部实现限制，我们可能需要重新创建适配器
+    }
+
     /**
      * 处理用户个人资料点击事件
      */
     override fun onUserProfileClicked() {
         // 处理用户图标和名称点击事件
         Toast.makeText(context, "User profile clicked", Toast.LENGTH_SHORT).show()
-        
+
         // 修改userIcon和userName的值
         settingsSheet?.apply {
             // 这里可以根据实际需求修改图标和名称
             userName.text = "已登录用户"
             // 示例：更改图标颜色或图片
-            userIcon.setColorFilter(androidx.core.content.ContextCompat.getColor(userIcon.context, android.R.color.holo_blue_light))
+            userIcon.setColorFilter(
+                androidx.core.content.ContextCompat.getColor(
+                    userIcon.context,
+                    android.R.color.holo_blue_light,
+                ),
+            )
         }
     }
 
@@ -433,5 +455,46 @@ class BrowserFragment :
         val intent = Intent(context, SettingsActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context?.startActivity(intent)
+    }
+
+    /**
+     * 当设置项需要更新时调用
+     */
+    override fun onUpdateSettingsItems(items: List<SettingItem>) {
+        currentSettingsItems = items
+    }
+
+    private fun showSettingsSheet() {
+        settingsSheet = SettingsSheetDialogFragment.create()
+        // 设置监听器以处理设置项点击事件
+        settingsSheet?.setSettingsSheetListener(this)
+
+        // 初始化当前设置项列表
+        currentSettingsItems = getInitialSettingsItems()
+        settingsSheet?.show(parentFragmentManager, "settings_sheet")
+    }
+
+    /**
+     * 获取初始设置项列表
+     */
+    private fun getInitialSettingsItems(): List<SettingItem> {
+        return listOf(
+            SettingItem(
+                title = getString(browserR.string.share),
+                iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_share_android_24,
+            ),
+            SettingItem(
+                title = getString(browserR.string.dark_mode),
+                iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_night_mode_24,
+            ),
+            SettingItem(
+                title = getString(browserR.string.request_desktop_site),
+                iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_device_desktop_24,
+            ),
+            SettingItem(
+                title = getString(browserR.string.private_mode),
+                iconRes = mozilla.components.ui.icons.R.drawable.mozac_ic_private_mode_24,
+            ),
+        )
     }
 }
