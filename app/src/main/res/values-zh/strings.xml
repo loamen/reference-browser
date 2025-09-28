@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Y浏览器</string>
-    <string name="organization_name">阿布狐工作室</string>
+    <string name="organization_name">阿布狐</string>
     <string name="toolbar_hint">搜索或输入网址</string>
     <string name="menu_action_add_tab">新建标签页</string>
     <string name="menu_action_close_tabs">关闭所有标签页</string>
@@ -74,7 +74,7 @@
     <string name="datareporting_notification_title">Y浏览器</string>
     <string name="datareporting_notification_summary">为了改善您的体验，参考浏览器会自动向 Yooho 发送一些信息。</string>
     <string name="default_notification_channel">浏览器</string>
-    <string name="about_content">%1$s 由阿布狐工作室倾力打造。</string>
+    <string name="about_content">%1$s 由阿布狐倾力打造。</string>
     <string name="menu_share_with">分享到…</string>
     <string name="toast_copied">已复制！</string>
     <string name="fxa_received_tab_channel_name">接收的标签页</string>
