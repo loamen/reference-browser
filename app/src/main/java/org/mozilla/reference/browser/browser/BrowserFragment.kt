@@ -40,7 +40,7 @@ import org.mozilla.reference.browser.search.AwesomeBarWrapper
 import org.mozilla.reference.browser.settings.Settings
 import org.mozilla.reference.browser.settings.SettingsActivity
 import org.mozilla.reference.browser.tabs.TabsTrayFragment
-import top.yooho.browser.entity.SettingItem
+import top.yooho.browser.model.SettingItem
 import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment.SettingsSheetListener

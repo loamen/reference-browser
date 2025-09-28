@@ -14,10 +14,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
-import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.Preference.OnPreferenceClickListener
@@ -43,7 +41,7 @@ import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.sync.BrowserFxAEntryPoint
 import top.yooho.browser.config.PrefConst
-import top.yooho.browser.settings.dialogs.LanguageChangeDialog
+import top.yooho.browser.ui.dialogs.LanguageChangeDialog
 import top.yooho.browser.utils.PrefUtil
 import top.yooho.setting.CustomizationSettingsFragment
 import top.yooho.setting.InstalledSearchEnginesSettingsFragment
