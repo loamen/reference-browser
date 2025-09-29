@@ -47,6 +47,7 @@ import top.yooho.browser.model.SettingItem
 import top.yooho.browser.ui.addons.AddonsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment
 import top.yooho.browser.ui.settings.SettingsSheetDialogFragment.SettingsSheetListener
+import top.yooho.browser.ui.video.VideoDetailActivity
 import top.yooho.browser.R as browserR
 
 /**
@@ -418,7 +419,8 @@ class BrowserFragment :
                 // 打开一个新的隐私模式标签页
                 requireComponents.useCases.tabsUseCases.addTab.invoke(
                     url = "about:privatebrowsing",
-                    private = true)
+                    private = true,
+                )
             }
             // 可以继续添加其他设置项的处理逻辑
             else -> {
@@ -470,11 +472,14 @@ class BrowserFragment :
     }
 
     private fun showSettingsSheet() {
-        // 初始化当前设置项列表
-        settingsSheet = SettingsSheetDialogFragment.create(getInitialSettingsItems())
-        // 设置监听器以处理设置项点击事件
-        settingsSheet?.setSettingsSheetListener(this)
-        settingsSheet?.show(parentFragmentManager, "settings_sheet")
+        val intent = Intent(requireContext(), VideoDetailActivity::class.java)
+        startActivity(intent)
+
+//        // 初始化当前设置项列表
+//        settingsSheet = SettingsSheetDialogFragment.create(getInitialSettingsItems())
+//        // 设置监听器以处理设置项点击事件
+//        settingsSheet?.setSettingsSheetListener(this)
+//        settingsSheet?.show(parentFragmentManager, "settings_sheet")
     }
 
     /**

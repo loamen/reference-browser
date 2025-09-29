@@ -76,6 +76,10 @@ allprojects {
         } else {
             mavenCentral()
         }
+        
+        // JitPack for GSYVideoPlayer
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.aliyun.com/repository/public" }
     }
 }
 

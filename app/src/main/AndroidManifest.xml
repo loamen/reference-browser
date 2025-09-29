@@ -184,6 +184,11 @@
             android:exported="false"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity android:name="top.yooho.browser.ui.video.VideoDetailActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme"
+            tools:replace="android:theme"/>
+
         <service
             android:name=".autofill.AutofillService"
             android:label="@string/app_name"
