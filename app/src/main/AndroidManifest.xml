@@ -186,7 +186,7 @@
 
         <activity android:name="top.yooho.browser.ui.video.VideoDetailActivity"
             android:exported="false"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppThemeNotActionBar"
             tools:replace="android:theme"/>
 
         <service
