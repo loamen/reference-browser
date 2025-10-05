@@ -327,15 +327,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     // 根据语言代码返回对应的显示名称
     private fun getDisplayLanguage(locale: Locale): String {
+        val context = requireContext()
         return when (locale.language) {
             "zh" -> {
                 // 区分简体中文和繁体中文
                 when (locale.country) {
-                    "TW" -> "繁體中文"
-                    else -> "简体中文"
+                    "TW" -> context.getString(top.yooho.browser.R.string.language_zh_tw)
+                    else -> context.getString(top.yooho.browser.R.string.language_zh_cn)
                 }
             }
-            "en" -> "English"
+            "en" -> context.getString(top.yooho.browser.R.string.language_en)
             else -> locale.displayLanguage
         }
     }
