@@ -91,7 +91,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val changeLanguageKey = requireContext().getPreferenceKey(R.string.pref_key_change_language)
         val preferenceChangeLanguage = findPreference<Preference>(changeLanguageKey)
         preferenceChangeLanguage?.onPreferenceClickListener = getClickListenerForLanguageChange()
-        preferenceChangeLanguage?.summary = getCurrentLocale().displayLanguage
+        preferenceChangeLanguage?.summary = getDisplayLanguage(getCurrentLocale())
 
         val preferenceRemoteDebugging = findPreference<SwitchPreferenceCompat>(remoteDebuggingKey)
         val preferenceAboutPage = findPreference<Preference>(aboutPageKey)
@@ -178,6 +178,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             LocaleListCompat.create(Locale.forLanguageTag(locale.toLanguageTag())),
                         )
                         top.yooho.browser.settings.Settings.clearAnnouncementData(requireContext())
+                        // 更新设置项中的语言显示
+                        findPreference<Preference>(requireContext().getPreferenceKey(R.string.pref_key_change_language))?.summary = getDisplayLanguage(locale)
                     }
                 },
             )
@@ -322,6 +324,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }.show()
             true
         }
+
+    // 根据语言代码返回对应的显示名称
+    private fun getDisplayLanguage(locale: Locale): String {
+        return when (locale.language) {
+            "zh" -> {
+                // 区分简体中文和繁体中文
+                when (locale.country) {
+                    "TW" -> "繁體中文"
+                    else -> "简体中文"
+                }
+            }
+            "en" -> "English"
+            else -> locale.displayLanguage
+        }
+    }
 
     companion object {
         private const val AMO_COLLECTION_OVERRIDE_EXIT_DELAY = 3000L

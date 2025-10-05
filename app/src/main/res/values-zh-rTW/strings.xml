@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Y瀏覽器</string>
+    <string name="organization_name">阿布狐</string>
+    <string name="toolbar_hint">搜索或輸入網址</string>
+    <string name="menu_action_add_tab">新建標籤頁</string>
+    <string name="menu_action_close_tabs">關閉所有標籤頁</string>
+    <string name="menu_action_close_tabs_private">關閉隱私標籤頁</string>
+    <string name="preferences_sign_in_summary">同步您的標籤頁和歷史記錄</string>
+    <string name="preferences_pair_sign_in_summary">與 Yooho 桌面版同步</string>
+    <string name="preferences_use_telemetry_summary">發送使用數據</string>
+    <string name="preferences_make_default_browser">設為默認瀏覽器</string>
+    <string name="preferences_compose_ui">使用實驗性 Jetpack Compose UI</string>
+    <string name="preferences_autofill">自動填充應用</string>
+    <string name="preferences_autofill_summary">在其他應用中自動填充登錄信息</string>
+    <string name="preferences_sync_history">歷史記錄</string>
+    <string name="preferences_sync_tabs">打開的標籤頁</string>
+    <string name="preferences_sync_passwords">密碼</string>
+    <string name="preferences_remote_debugging">通過 USB 遠程調試</string>
+    <string name="preferences_tracking_protection_normal">在普通瀏覽模式下啟用</string>
+    <string name="preferences_tracking_protection_private">在隱私瀏覽模式下啟用</string>
+    <string name="preferences_global_privacy_control">告訴網站不要共享或出售數據</string>
+    <string name="preferences_about_page">關於Y瀏覽器</string>
+    <string name="sign_in">登錄</string>
+    <string name="pair_sign_in">使用二維碼登錄</string>
+    <string name="firefox_account">Yooho 賬戶</string>
+    <string name="sign_out">退出登錄</string>
+    <string name="sync_now">立即同步</string>
+    <string name="syncing">同步中</string>
+    <string name="manage_account">管理賬戶</string>
+    <string name="manage_account_summary">更改密碼、管理數據收集或刪除賬戶</string>
+    <string name="preferences_sync_failed_summary">同步失敗。上次成功：%s</string>
+    <string name="preferences_sync_failed_never_synced_summary">同步失敗。上次同步：從未</string>
+    <string name="preferences_sync_last_synced_summary">上次同步：%s</string>
+    <string name="preferences_sync_never_synced_summary">上次同步：從未</string>
+    <string name="privacy">隱私</string>
+    <string name="preferences_privacy_summary">跟踪、Cookie、數據選擇</string>
+    <string name="sync_category">選擇同步內容</string>
+    <string name="open_links_in_apps">用外部應用打開鏈接</string>
+    <string name="developer_tools_category">開發者工具</string>
+    <string name="use_telemetry">使用遙測</string>
+    <string name="mozilla_category">關於</string>
+    <string name="tracker_category">跟踪保護</string>
+    <string name="data_choices_category">數據選擇</string>
+    <string name="settings">設置</string>
+    <string name="back">後退</string>
+    <string name="forward">前進</string>
+    <string name="report_issue">反饋問題</string>
+    <string name="find_in_page">在頁面中查找</string>
+    <string name="share">分享</string>
+    <string name="request_desktop_site">桌面模式</string>
+    <string name="add_to_homescreen">添加到首屏</string>
+    <string name="synced_tabs">同步標籤</string>
+    <string name="account_settings">賬戶設置</string>
+    <string name="privacy_settings">隱私設置</string>
+    <string name="pair_preferences">配對</string>
+    <string name="pair_instructions">在 Yooho 桌面版中打開 yooho.top/pair 獲取配對碼</string>
+    <string name="crash_report_non_fatal_message">抱歉，我們崩潰了</string>
+    <string name="crash_report_non_fatal_action">報告</string>
+    <string name="private_browsing_title">隱私瀏覽</string>
+    <string name="private_browsing_body"><![CDATA[
+<h1>隱私瀏覽</h1>
+<p>當您在隱私窗口中瀏覽時，參考瀏覽器<strong>不會保存</strong>：</p>
+<ul class="two-column">
+    <li>訪問的頁面</li>
+    <li>搜索記錄</li>
+    <li>Cookie</li>
+    <li>臨時文件</li>
+</ul>
+<p>隱私瀏覽<strong>不會讓您在互聯網上匿名</strong>。您的雇主或互聯網服務提供商仍然可以知道您訪問的頁面。</p>
+<p class="about-info">了解更多關於<a id="learnMore">隱私瀏覽</a>的信息。</p>
+     ]]></string>
+    <string name="datareporting_notification_title">Y瀏覽器</string>
+    <string name="datareporting_notification_summary">為了改善您的體驗，參考瀏覽器會自動向 Yooho 發送一些信息。</string>
+    <string name="default_notification_channel">瀏覽器</string>
+    <string name="about_content">%1$s 由阿布狐傾力打造。</string>
+    <string name="menu_share_with">分享到…</string>
+    <string name="toast_copied">已復製！</string>
+    <string name="fxa_received_tab_channel_name">接收的標籤頁</string>
+    <string name="fxa_received_tab_channel_description">來自其他 Yooho 設備的標籤頁通知。</string>
+    <string name="fxa_tab_received_notification_name">標籤頁已接收</string>
+    <string name="fxa_tab_received_from_notification_name">來自 %s 的標籤頁</string>
+    <string name="synced_tabs_connect_to_sync_account">連接 Yooho 賬戶。</string>
+    <string name="synced_tabs_connect_another_device">連接另一台設備。</string>
+    <string name="synced_tabs_reauth">請重新認證。</string>
+    <string name="synced_tabs_enable_tab_syncing">請啟用標籤頁同步。</string>
+    <string name="preferences_customize_amo_collection">自定義擴展集合</string>
+    <string name="customize_addon_collection_ok">確定</string>
+    <string name="customize_addon_collection_cancel">取消</string>
+    <string name="customize_addon_collection_hint">集合名稱</string>
+    <string name="customize_addon_collection_user_hint">集合所有者（用戶 ID）</string>
+    <string name="toast_customize_addon_collection_done">擴展集合已修改。退出應用以應用更改…</string>
+
+    <!--    loamen-->
+    <string name="preferences_change_language">顯示語言</string>
+    <string name="install_add_on_via_file">從文件安裝</string>
+    <string name="install_add_on_via_url">從URL安裝</string>
+    <string name="unable_to_open_the_file_chooser">無法打開文件選擇器</string>
+    <string name="the_add_on_installation_was_successful">擴展安裝成功</string>
+    <string name="the_add_on_installation_was_failed">擴展安裝失敗</string>
+    <string name="invalid_url">無效的URL</string>
+    <string name="please_enter_a_valid_url">請輸入正確的擴展網址</string>
+    <string name="press_again_to_exit">再按一次退出</string>
+    <string name="about_support">使用幫助</string>
+    <string name="about_privacy_notice">隱私聲明</string>
+    <string name="about_licensing_information">許可信息</string>
+    <string name="about_config">瀏覽器配置</string>
+</resources>
