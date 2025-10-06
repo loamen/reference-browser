@@ -129,6 +129,20 @@ abstract class SearchEngineListPreference @JvmOverloads constructor(
             )
         }
 
+        if (!context.components.core.store.state.search.searchEngines.any { it.id == "baidu" }) {
+            context.components.useCases.searchUseCases.addSearchEngine(
+                SearchEngine(
+                    "baidu",
+                    "百度",
+                    BitmapFactory.decodeResource(context.resources, R.drawable.ic_baidu),
+                    "UTF-8",
+                    SearchEngine.Type.CUSTOM,
+                    listOf("https://m.baidu.com/s?word={searchTerms}"),
+                    "https://m.baidu.com/su?wd={searchTerms}&action=opensearch&ie=UTF-8",
+                ),
+            )
+        }
+
         if (!context.components.core.store.state.search.searchEngines.any { it.id == "360" }) {
             context.components.useCases.searchUseCases.addSearchEngine(
                 SearchEngine(
