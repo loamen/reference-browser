@@ -5,7 +5,9 @@
 package org.mozilla.reference.browser
 
 import android.app.Application
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +28,9 @@ import mozilla.components.support.webextensions.WebExtensionSupport
 import org.mozilla.reference.browser.push.PushFxaIntegration
 import org.mozilla.reference.browser.push.WebPushEngineIntegration
 import org.mozilla.reference.browser.settings.Settings
+import top.yooho.browser.config.PrefConst
+import top.yooho.browser.utils.PrefUtil
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 open class BrowserApplication : Application() {
@@ -54,6 +59,9 @@ open class BrowserApplication : Application() {
         AppCompatDelegate.setDefaultNightMode(
             Settings.getAppTheme(this)
         )
+
+        // 读取并应用语言设置
+        initLanguage()
 
         components.core.engine.warmUp()
 
@@ -139,6 +147,16 @@ open class BrowserApplication : Application() {
             .periodicallyInForeground(interval = 30, unit = TimeUnit.SECONDS)
             .whenGoingToBackground()
             .whenSessionsChange()
+    }
+
+    private fun initLanguage(){
+        val savedLanguage = PrefUtil.getString(this, PrefConst.SELECTED_LANGUAGE_KEY, null)
+        val savedCountry = PrefUtil.getString(this, PrefConst.SELECTED_COUNTRY_KEY, null)
+
+        if (savedLanguage != null && savedCountry != null) {
+            val locale = Locale.Builder().setLanguage(savedLanguage).setRegion(savedCountry).build()
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.create(locale))
+        }
     }
 
     companion object {
