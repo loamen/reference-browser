@@ -17,9 +17,15 @@ import groovy.json.JsonOutput
 
 android {
     defaultConfig {
+
         applicationId "top.yooho.browser"
+        buildToolsVersion Config.buildToolsVersion
+        compileSdk {
+            version = release(Config.compileSdkMajorVersion) {
+                minorApiLevel = Config.compileSdkMinorVersion
+            }
+        }
         minSdkVersion Config.minSdkVersion
-        compileSdk = Config.compileSdkVersion
         targetSdkVersion Config.targetSdkVersion
         versionCode 1
         versionName Config.generateDebugVersionName()
@@ -52,11 +58,6 @@ android {
         debug {
             applicationIdSuffix ".debug"
         }
-        raptor releaseTemplate >> { // the ">>" concatenates the raptor-specific options with the template
-            applicationIdSuffix ".raptor"
-            manifestPlaceholders.isRaptorEnabled = "true"
-            matchingFallbacks = ['release']
-        }
         nightly releaseTemplate >> {
             buildConfigField "boolean", "IS_RELEASED", "true"
         }
@@ -87,10 +88,6 @@ android {
 
             include "armeabi-v7a", "arm64-v8a", "x86_64"
         }
-    }
-
-    compileOptions {
-        coreLibraryDesugaringEnabled = true
     }
 
     namespace = 'org.mozilla.reference.browser'
@@ -235,7 +232,6 @@ project.configurations.configureEach {
 }
 
 dependencies {
-    coreLibraryDesugaring libs.desugar.jdk.libs
 
     // We pick up JNA transitively by way of Glean, which is currently on version 5.14.0.
     // However, we need to force version 5.17.0 due to Google Play's 16KB page size requirement.
