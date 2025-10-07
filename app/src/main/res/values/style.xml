@@ -23,6 +23,10 @@
 
         <!-- 自定义 AlertDialog 样式 -->
         <item name="alertDialogTheme">@style/CustomAlertDialogTheme</item>
+        
+        <!-- 自定义按钮样式 -->
+        <item name="buttonStyle">@style/CustomButtonStyle</item>
+        <item name="materialButtonStyle">@style/CustomMaterialButtonStyle</item>
     </style>
 
     <style name="AppTheme" parent="Theme.Material3.DayNight">
@@ -45,6 +49,10 @@
 
         <!-- 自定义 AlertDialog 样式 -->
         <item name="alertDialogTheme">@style/CustomAlertDialogTheme</item>
+        
+        <!-- 自定义按钮样式 -->
+        <item name="buttonStyle">@style/CustomButtonStyle</item>
+        <item name="materialButtonStyle">@style/CustomMaterialButtonStyle</item>
     </style>
 
     <style name="AddonsActivityTheme" parent="AppTheme">
@@ -74,5 +82,15 @@
     <!-- 自定义 Dialog 按钮样式 -->
     <style name="CustomDialogButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/alert_dialog_button_color</item>
+    </style>
+    
+    <!-- 自定义 Button 样式 -->
+    <style name="CustomButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">?textPrimary</item>
+    </style>
+    
+    <!-- 自定义 MaterialButton 样式 -->
+    <style name="CustomMaterialButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:textColor">?textPrimary</item>
     </style>
 </resources>

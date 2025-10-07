@@ -244,7 +244,7 @@ class BrowserFragment :
 
             if (selectedTab == null) {
                 // 没有打开网页，直接跳转到AddonsActivity
-                val intent = android.content.Intent(requireContext(), AddonsActivity::class.java)
+                val intent = Intent(requireContext(), AddonsActivity::class.java)
                 startActivity(intent)
             } else {
                 // 有打开网页，打印网址日志
@@ -254,7 +254,7 @@ class BrowserFragment :
                 if (url.contains(getString(top.yooho.browser.R.string.const_nav_url))
                     || !url.startsWith("http")
                 ) {
-                    val intent = android.content.Intent(requireContext(), AddonsActivity::class.java)
+                    val intent = Intent(requireContext(), AddonsActivity::class.java)
                     startActivity(intent)
                 } else {
                     println("Current URL: $url")
