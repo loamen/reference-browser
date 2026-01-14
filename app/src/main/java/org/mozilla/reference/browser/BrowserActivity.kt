@@ -180,11 +180,15 @@ open class BrowserActivity : AppCompatActivity(), StandbyFragment.NavigationList
         attrs: AttributeSet,
     ): View? =
         when (name) {
-            EngineView::class.java.name ->
+            EngineView::class.java.name -> {
                 components.core.engine
                 .createView(context, attrs)
                 .asView()
-            else -> super.onCreateView(parent, name, context, attrs)
+            }
+
+            else -> {
+                super.onCreateView(parent, name, context, attrs)
+            }
         }
 
     private fun onNonFatalCrash(crash: Crash) {

@@ -47,8 +47,9 @@ import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import mozilla.components.support.base.log.logger.Logger
 import mozilla.components.support.ktx.android.view.enterImmersiveMode
 import mozilla.components.support.ktx.android.view.exitImmersiveMode
+import mozilla.components.ui.widgets.behavior.DependencyGravity
 import mozilla.components.ui.widgets.behavior.EngineViewClippingBehavior
-import mozilla.components.ui.widgets.behavior.EngineViewScrollingBehavior
+import mozilla.components.ui.widgets.behavior.EngineViewScrollingGesturesBehavior
 import org.mozilla.reference.browser.BrowserActivity
 import org.mozilla.reference.browser.BuildConfig
 import org.mozilla.reference.browser.R
@@ -58,7 +59,6 @@ import org.mozilla.reference.browser.ext.getPreferenceKey
 import org.mozilla.reference.browser.ext.requireComponents
 import org.mozilla.reference.browser.pip.PictureInPictureIntegration
 import org.mozilla.reference.browser.tabs.LastTabFeature
-import mozilla.components.ui.widgets.behavior.ViewPosition as MozacToolbarBehaviorToolbarPosition
 import org.mozilla.reference.browser.ext.enableDynamicBehavior
 import top.yooho.ui.theme.ThemeManager
 
@@ -199,10 +199,10 @@ abstract class BaseBrowserFragment :
         )
 
         (toolbar.layoutParams as? CoordinatorLayout.LayoutParams)?.apply {
-            behavior = EngineViewScrollingBehavior(
-                view.context,
-                null,
-                MozacToolbarBehaviorToolbarPosition.TOP,
+            behavior = EngineViewScrollingGesturesBehavior(
+                engineView = engineView,
+                dependency = toolbar,
+                dependencyGravity = DependencyGravity.Bottom,
             )
         }
 
@@ -220,6 +220,7 @@ abstract class BaseBrowserFragment :
             requireContext(),
             swipeRefresh,
             engineView,
+            toolbar,
             true,
         )
 
